@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>demo_Pomodoro</title>
+</head>
+<body>
+    <script type="module" src="script.js"></script>
+    <section class="tomato">
+        <div class="header">
+            <span data-tab-target="#focus-time" class="nav active">Focus Time</span>
+            <span data-tab-target="#short-break" class="nav">Short Break</span>
+            <span data-tab-target="#long-rest" class="nav">Long Rest</span>
+        </div>
+        <div class="content">
+            <div id="focus-time" class="active" data-tab-content>
+              <div class="time">
+                <span>23:45</span>
+              </div>
+              <div class="start">Start
+              </div>
+            </div>
+            <div id="short-break" data-tab-content>
+              <div class="time">
+                <span>12:34</span>
+              </div>
+              <div class="start">Stop
+              </div>
+            </div>
+            <div id="long-rest" data-tab-content>
+              <div class="time">
+                <span>43:21</span>
+              </div>
+              <div class="start">Reset
+              </div>
+            </div>
+    </section>
+</body>
+</html>
