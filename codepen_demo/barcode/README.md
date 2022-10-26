@@ -1,5 +1,5 @@
-# Promise
+# Barcode
 
-By Xiang Lu
+By Shicheng Bei
 
 https://codepen.io/Xiangluxiang/pen/jOKOaJy
