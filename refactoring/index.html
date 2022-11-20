@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/focus.css" />
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="scripts/script.js" ></script>
+    <script type="module" src="scripts/focus.js" ></script>
+</head>
+<body>
+    <div class="container">
+        <div id="focus" class="page open" data-main-tab-content>
+            <div id="focus-header">
+                <span data-tab-target="#focus-time" class="focus-nav active"
+                  >Focus Time</span
+                >
+                <span data-tab-target="#short-break" class="focus-nav"
+                  >Short Break</span
+                >
+                <span data-tab-target="#long-rest" class="focus-nav">Long Rest</span>
+              </div>
+              <div class="content">
+                <div id="focus-time" class="active" data-tab-content>
+                  <div id="annotation">
+                    <div id="focusing-task-tile">
+                      <span>“What are you going to work on?” - </span>
+                    </div>
+                    <div id="pomo-amount">
+                      <ion-icon id="pomo-icon" name="time-outline"></ion-icon>
+                      <span id="pomo-completed">0</span>
+                      <span>/</span>
+                      <span id="pomo-expected">8</span>
+                    </div>
+                  </div>
+                  <div class="time">
+                    <span>23:45</span>
+                  </div>
+                  <div class="start">
+                    <div id="action-play" class="timer-button">
+                        <ion-icon name="play-circle-outline"></ion-icon>
+                    </div>
+                    <div id="action-pause" class="timer-button">
+                        <ion-icon name="pause-circle-outline"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+                <div id="short-break" data-tab-content>
+                  <div class="time">
+                    <span>12:34</span>
+                  </div>
+                  <div class="start">
+                    <div id="action-play" class="timer-button">
+                        <ion-icon name="play-circle-outline"></ion-icon>
+                    </div>
+                    <div id="action-pause" class="timer-button">
+                        <ion-icon name="pause-circle-outline"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+                <div id="long-rest" data-tab-content>
+                  <div class="time">
+                    <span>43:21</span>
+                  </div>
+                  <div class="start">
+                    <div id="action-play" class="timer-button">
+                        <ion-icon name="play-circle-outline"></ion-icon>
+                    </div>
+                    <div id="action-pause" class="timer-button">
+                        <ion-icon name="pause-circle-outline"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div id="timeline" class="page close" data-main-tab-content>
+            <span>Task</span>
+        </div>
+        <div id="setting" class="page close" data-main-tab-content="">
+            <span>setting</span>
+        </div>
+        <div id="nav">
+            <ul>
+                <li data-main-tab-target="#focus" class="checked" style="--b:rgba(255,0,0,0.2)">
+                    <ion-icon name="alarm-outline"></ion-icon>
+                    <span>Focus</span>
+                </li>
+                <li data-main-tab-target="#timeline" class="no-checked" style="--b:rgba(255,0,0,0.2)">
+                    <ion-icon name="list-outline"></ion-icon>
+                    <span>Task</span>
+                </li>
+                <li data-main-tab-target="#setting" class="no-checked" style="--b:rgba(255,0,0,0.2)">
+                    <ion-icon name="settings-outline"></ion-icon>
+                    <span>Setting</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
