@@ -144,17 +144,16 @@
 }
 
 .time-line-card-tag {
-    background: var(--sr-annote-color-0);
+    background: #63efff;
 }
 
 .time-line-card-date {
-    background: var(--sr-annote-color-1);
+    background: #ffe165;
 }
 
 .time-line-card-tomato-count {
-    background: var(--sr-annote-color-4);
+    background: var(--primary-color-deep);
 }
-
 .alarm-icon {
     margin-right: 5px;
 }
