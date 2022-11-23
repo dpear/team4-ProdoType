@@ -1,7 +1,8 @@
 @import '../src/fonts/fonts.css';
 
-#timeline {
-    height: 90%;
+#create-task {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,7 +11,7 @@
     background: var(--primary-color);
 }
 
-#timeline .bubble-box {
+#create-task .bubble-box {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +25,7 @@
     flex: 1;
 }
 
-#timeline .bubble-box input[type="text"] {
+#create-task .bubble-box input[type="text"] {
     overflow: hidden
     display: flex;
     width: 100%;
@@ -41,11 +42,11 @@
     padding-right: 5%;
 }
 
-#timeline .bubble-box input[type="text"]::placeholder {
+#create-task .bubble-box input[type="text"]::placeholder {
     color: var(--text-color);
 }
 
-#timeline .date {
+#create-task .date {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,7 +60,7 @@
     flex: 1;
 }
 
-#timeline .date input[type="date"] {
+#create-task .date input[type="date"] {
     display: flex;
     width: 100%;
     flex: 1;
@@ -71,7 +72,7 @@
     font-size: var(--reminder-font-size);
 }
 
-#timeline .bubble-box #reminder-pomo-amount {
+#create-task .bubble-box #reminder-pomo-amount {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,7 +83,7 @@
     margin-left: 5px;
 }
 
-#timeline .bubble-box #reminder-pomo-amount #reminder-pomo-icon {
+#create-task .bubble-box #reminder-pomo-amount #reminder-pomo-icon {
     object-fit: cover;
     display: flex;
     justify-content: center;
@@ -92,7 +93,7 @@
     color: var(--background-black);
 }
 
-#timeline .bubble-box #reminder-pomo-amount > span {
+#create-task .bubble-box #reminder-pomo-amount > span {
     font-size: var(--internal-title-font-size);
     display: flex;
     justify-content: center;
@@ -101,7 +102,7 @@
     padding-right: 10%;
 }
 
-#timeline .bubble-box input[type="number"] {
+#create-task .bubble-box input[type="number"] {
     display: flex;
     width: 20%;
     background: var(--primary-color);
@@ -113,12 +114,12 @@
 }
 
 /* Chrome and Edge No Arrows */
-#timeline .bubble-box input[type="number"]::-webkit-outer-spin-button,
-#timeline .bubble-box input[type="number"]::-webkit-inner-spin-button {
+#create-task .bubble-box input[type="number"]::-webkit-outer-spin-button,
+#create-task .bubble-box input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-#timeline .bubble-box input[type="number"]::placeholder {
+#create-task .bubble-box input[type="number"]::placeholder {
     color: var(--text-color);
 }
 
