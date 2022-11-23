@@ -7,10 +7,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/focus.css" />
+    <link rel="stylesheet" href="css/timeline.css" />
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script type="module" src="scripts/script.js" ></script>
     <script type="module" src="scripts/focus.js" ></script>
+    <script type="module" src="scripts/timeline.js" ></script>
 </head>
 <body>
     <div class="container">
@@ -88,7 +90,25 @@
               </div>
         </div>
         <div id="timeline" class="page close" data-main-tab-content>
-            <span>Task</span>
+            <div class="operation-wrapper">
+              <div id = "create-task" class="timeline-button">
+                <ion-icon name="add-circle"></ion-icon>
+              </div>
+              <div class="switch-field">
+                <input type="radio" id="radio-one" name="switch-one" value="yes" checked/>
+                <label for="radio-one">Upcoming</label>
+                <input type="radio" id="radio-two" name="switch-one" value="no" />
+                <label for="radio-two">Completed</label>
+              </div>
+            </div>
+            <div id="time-line-list-container"></div>
+            <div class="create_dialog_wrapper" id="create_dialog_wrapper">
+              <div class="create_dialog">
+                <!-- todo: fill create dialog here -->
+              </div>
+              <div class="create_mask" id="close-mask">
+              </div>
+            </div>
         </div>
         <div id="setting" class="page close" data-main-tab-content="">
             <span>setting</span>
