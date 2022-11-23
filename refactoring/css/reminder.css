@@ -1,14 +1,16 @@
 @import '../src/fonts/fonts.css';
 
-#reminders {
+#timeline {
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    position: relative;
+    background: var(--primary-color);
 }
 
-#reminders .annotation {
+#timeline .bubble-box {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,22 +20,32 @@
     margin-top: var(--start-margin-top);
     margin-bottom: var(--start-margin-top);
     border-radius: var(--box-radius);
+    font-size: var(--title-font-size);
+    flex: 1;
 }
 
-#reminders .annotation input[type="text"] {
+#timeline .bubble-box input[type="text"] {
     overflow: hidden
     display: flex;
     width: 100%;
+    height: 100%;
     flex: 1;
     background: var(--primary-color);
     border: none;
     color: var(--text-color);
-    font-size: var(--internal-title-font-size);
+    font-size: var(--reminder-font-size);
     border-radius: var(--box-radius);
-    text-align: center;
+    /* text-align: left; */
+    align: left;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
-#reminders .date {
+#timeline .bubble-box input[type="text"]::placeholder {
+    color: var(--text-color);
+}
+
+#timeline .date {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,20 +56,22 @@
     border-radius: var(--box-radius);
     margin-top: var(--start-margin-top);
     margin-bottom: var(--start-margin-top);
+    flex: 1;
 }
 
-#reminders .date input[type="date"] {
+#timeline .date input[type="date"] {
     display: flex;
-    width: 80%;
+    width: 100%;
     flex: 1;
     background: var(--primary-color);
     border: none;
     color: var(--text-color);
     border-radius: var(--box-radius);
     text-align: center;
+    font-size: var(--reminder-font-size);
 }
 
-#reminders .annotation #pomo-amount {
+#timeline .bubble-box #reminder-pomo-amount {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,17 +82,17 @@
     margin-left: 5px;
 }
 
-#reminders .annotation #pomo-amount #pomo-icon {
+#timeline .bubble-box #reminder-pomo-amount #reminder-pomo-icon {
     object-fit: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    font-size: 18px;
+    font-size: 30px;
     color: var(--background-black);
 }
 
-#reminders .annotation #pomo-amount > span {
+#timeline .bubble-box #reminder-pomo-amount > span {
     font-size: var(--internal-title-font-size);
     display: flex;
     justify-content: center;
@@ -87,13 +101,25 @@
     padding-right: 10%;
 }
 
-#reminders .annotation input[type="number"] {
+#timeline .bubble-box input[type="number"] {
     display: flex;
-    width: 15%;
+    width: 20%;
     background: var(--primary-color);
     border: none;
     color: var(--text-color);
     justify-content: center;
+    font-size: var(--reminder-font-size);
+    -moz-appearance: textfield; /* Firefox No Arrows */
+}
+
+/* Chrome and Edge No Arrows */
+#timeline .bubble-box input[type="number"]::-webkit-outer-spin-button,
+#timeline .bubble-box input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+#timeline .bubble-box input[type="number"]::placeholder {
+    color: var(--text-color);
 }
 
 .submit {
@@ -101,9 +127,10 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 20%;
-    height: 30%;
+    width: 50%;
+    /* height: 5%; */
     margin: var(--start-margin-top);
+    flex: 1;
 }
 
 .submit .submit-button {
@@ -116,5 +143,5 @@
     width: 100%;
     /* height: 100%; */
     color: var(--text-color);
-    font-size: var(--internal-title-font-size);
+    font-size: 30px;
 }
