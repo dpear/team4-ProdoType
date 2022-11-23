@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/focus.css" />
     <link rel="stylesheet" href="css/timeline.css" />
+    <link rel="stylesheet" href="css/reminder.css" />
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script type="module" src="scripts/script.js" ></script>
@@ -25,7 +26,7 @@
                   >Short Break</span
                 >
                 <span data-tab-target="#long-rest" class="focus-nav">Long Rest</span>
-              </div>
+            </div>
               <div class="content">
                 <div id="focus-time" class="active" data-tab-content>
                   <div class="annotation">
@@ -109,6 +110,34 @@
               <div class="create_mask" id="close-mask">
               </div>
             </div>
+          <div id="create-task-dialogue">
+            <div class="bubble-box">
+              <span>Reminders</span>
+            </div>
+            <div class="bubble-box">
+                <input type="text" id="" name="" placeholder="Enter Title">
+            </div>
+            <div class="bubble-box">
+              <div id="reminder-pomo-amount">
+                <ion-icon id="reminder-pomo-icon" name="time-outline"></ion-icon>
+                <span>:</span>
+              </div>
+              <input type="number" id="quantity" name="quantity" min="0" max="8" placeholder="0-8">
+              <div class="date">
+                  <input type="date" id="date-start" name="date">
+                   <!-- value="2018-07-22" -->
+                   <!-- min="2018-01-01" max="2018-12-31"> -->
+              </div>
+            </div>
+            <div class="submit">
+              <div class="submit-button">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+              </div>
+              <div class="submit-button">
+                  <ion-icon name="close-outline"></ion-icon>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="setting" class="page close" data-main-tab-content="">
             <span>setting</span>
