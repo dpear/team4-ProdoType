@@ -97,11 +97,11 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
   }
 
   const listenStartBtnClicked = () => {
-    const taskStartBtns = document.querySelectorAll('time-line-card-button-play')
+    const taskStartBtns = document.querySelectorAll('.time-line-card-button-play')
     console.log(taskStartBtns)
     taskStartBtns.forEach(tsBtn => {
       tsBtn.addEventListener('click', () => {
-        taskIdx = Number(tsBtn.getAttribute('key'))
+        let taskIdx = Number(tsBtn.getAttribute('key'))
         let taskInfo = state.items[taskIdx]
         const tabs = document.querySelectorAll('[data-main-tab-target]')
         tabs[0].click()
