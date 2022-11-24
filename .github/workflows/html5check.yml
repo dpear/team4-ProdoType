@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: echo "$GITHUB_WORKSPACE"
-    # - name: Checkout repo 
-    #   uses: actions/checkout@v2 # Requried will all actions
-    #   # run: echo ${{ github.repository }}
-    #   with: 
-    #     ref: refactor-dev-cicd
+    - name: Checkout repo 
+      uses: actions/checkout@v2 # Requried will all actions
+      # run: echo ${{ github.repository }}
+      with: 
+        ref: refactor-dev-cicd
     # - name: Checks HTML5
     #   uses: Cyb3r-Jak3/html5validator-action
     #   with:
