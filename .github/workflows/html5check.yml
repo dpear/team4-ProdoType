@@ -13,6 +13,7 @@ jobs:
       uses: Cyb3r-Jak3/html5validator-action
       with:
         root: refactoring/
+    - name: Create a log file 
       uses: actions/upload-artifact@v3
       with:
         name: log
