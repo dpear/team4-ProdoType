@@ -13,8 +13,8 @@ jobs:
       # run: echo ${{ github.repository }}
       with: 
         ref: refactor-dev-cicd
-    - name: Checks HTML5
-      uses: Cyb3r-Jak3/html5validator-action
+    - name: HTML5 Validator
+      uses: Cyb3r-Jak3/html5validator-action@master
       with:
         root: refactoring/
     # - name: Checks CSS
