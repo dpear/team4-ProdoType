@@ -45,7 +45,6 @@
     height: 300px;
     background: #fff;
     border-radius: 20px;
-    padding: 20px;
     box-sizing: border-box;
     z-index: 5;
 }
@@ -174,7 +173,7 @@
 }
 
 .switch-field label {
-    background-color: #fff; 
+    background-color: #fff;
     opacity: .4;
     color:  var(--primary-color);
     font-weight: bold;
@@ -194,7 +193,7 @@
 }
 
 .switch-field input:checked + label {
-    background-color: #fff; 
+    background-color: #fff;
     box-shadow: none;
     opacity: 1;
 }

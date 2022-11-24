@@ -3,152 +3,121 @@
 #create-task-dialogue {
     width: 100%;
     height: 100%;
+}
+
+#create-task-dialogue form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    background: var(--primary-color);
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+#create-task-dialogue #reminder-header {
+    display: flex;
+    flex: 1;
+    color: var(--text-color);
+    font-size: var(--reminder-font-size);
+    margin-top: var(--start-margin-top);
 }
 
 #create-task-dialogue .bubble-box {
     display: flex;
+    flex: 1;
     justify-content: center;
     align-items: center;
     width: 85%;
-    height: 10%;
-    background-color: var(--primary-color-deep);
-    margin-top: var(--start-margin-top);
-    margin-bottom: var(--start-margin-top);
     border-radius: var(--box-radius);
-    font-size: var(--title-font-size);
-    flex: 1;
-}
-
-#create-task-dialogue .bubble-box span {
-    height: 100%;
+    font-size: var(--reminder-font-size);
     color: var(--text-color);
-    font-size: 1rem;
+    margin-bottom: var(--start-margin-top);
+    background-color: var(--primary-color-deep);
 }
 
-#create-task-dialogue .bubble-box input[type="text"] {
-    overflow: hidden;
+#create-task-dialogue input[type="text"] {
     display: flex;
-    width: 100%;
-    height: 100%;
     flex: 1;
-    background: var(--primary-color);
+    overflow: hidden;
+    height: 100%;
+    background-color: var(--primary-color-deep);
     border: none;
     color: var(--text-color);
-    font-size: var(--reminder-font-size);
     border-radius: var(--box-radius);
-    /* text-align: left; */
-    /* align: left; */
     padding-left: 5%;
     padding-right: 5%;
 }
 
-#create-task-dialogue .bubble-box input[type="text"]::placeholder {
+#create-task-dialogue input[type="text"]::placeholder {
     color: var(--text-color);
 }
 
-#create-task-dialogue .date {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 85%;
-    height: 15%;
-    background-color: var(--primary-color-deep);
-    border-radius: var(--box-radius);
-    margin-top: var(--start-margin-top);
-    margin-bottom: var(--start-margin-top);
-    flex: 1;
-}
-
-#create-task-dialogue .date input[type="date"] {
-    display: flex;
-    width: 100%;
-    flex: 1;
-    background: var(--primary-color);
-    border: none;
+#create-task-dialogue #reminder-pomo-icon {
+    width: 15%;
+    font-size: 20px;
     color: var(--text-color);
-    border-radius: var(--box-radius);
-    text-align: center;
-    font-size: var(--reminder-font-size);
-}
-
-#create-task-dialogue .bubble-box #reminder-pomo-amount {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20%;
-    height: 80%;
-    position: relative;
-    overflow: hidden;
-    margin-left: 5px;
-}
-
-#create-task-dialogue .bubble-box #reminder-pomo-amount #reminder-pomo-icon {
     object-fit: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    font-size: 30px;
-    color: var(--background-black);
 }
 
-#create-task-dialogue .bubble-box #reminder-pomo-amount > span {
-    font-size: var(--internal-title-font-size);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    padding-right: 10%;
-}
-
-#create-task-dialogue .bubble-box input[type="number"] {
-    display: flex;
-    width: 20%;
+#create-task-dialogue input[type="number"] {
+    width: 15%;
     background: var(--primary-color);
     border: none;
     color: var(--text-color);
-    justify-content: center;
-    font-size: var(--reminder-font-size);
+    text-align: center;
     -moz-appearance: textfield; /* Firefox No Arrows */
 }
 
 /* Chrome and Edge No Arrows */
-#create-task-dialogue .bubble-box input[type="number"]::-webkit-outer-spin-button,
-#create-task-dialogue .bubble-box input[type="number"]::-webkit-inner-spin-button {
+#create-task-dialogue input[type="number"]::-webkit-outer-spin-button,
+#create-task-dialogue input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-#create-task-dialogue .bubble-box input[type="number"]::placeholder {
+#create-task-dialogue input[type="number"]::placeholder {
     color: var(--text-color);
 }
 
-.submit {
+#create-task-dialogue input[type="date"] {
+    width: 60%;
+    background-color: var(--primary-color-deep);
+    border: none;
+    color: var(--text-color);
+    text-align: center;
+    border-radius: var(--box-radius);
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+#create-task-dialogue select {
     display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    /* height: 5%; */
-    margin: var(--start-margin-top);
     flex: 1;
-}
-
-.submit .submit-button {
-    width: 100%;
+    border: none;
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
+    text-align: center;
+    border-radius: var(--box-radius);
     height: 100%;
-    display: block;
 }
 
-.submit .submit-button > ion-icon {
-    width: 100%;
-    /* height: 100%; */
+/* TODO: Visualize disabled button */
+#create-task-dialogue ion-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    border: 2px solid var(--text-color);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#create-task-dialogue ion-button:hover {
+    background-color: var(--primary-color-deep)
+}
+
+#create-task-dialogue ion-button ion-icon {
     color: var(--text-color);
     font-size: 30px;
 }

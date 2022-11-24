@@ -14,6 +14,7 @@
     <script type="module" src="scripts/script.js" ></script>
     <script type="module" src="scripts/focus.js" ></script>
     <script type="module" src="scripts/timeline.js" ></script>
+    <script type="module" src="scripts/reminder.js" ></script>
 </head>
 <body>
     <div class="container">
@@ -107,32 +108,28 @@
               <div class="create_dialog">
                 <!-- todo: fill create dialog here -->
                 <div id="create-task-dialogue">
-                  <div class="bubble-box">
-                    <span>New Task</span>
-                  </div>
-                  <div class="bubble-box">
-                      <input type="text" id="" name="" placeholder="Enter Title">
-                  </div>
-                  <div class="bubble-box">
-                    <div id="reminder-pomo-amount">
+                  <form id="form">
+                    <span id="reminder-header">New Task</span>
+                    <div class="bubble-box">
+                        <input type="text" id="form-title" name="title" placeholder="Enter Title" required/>
+                    </div>
+                    <div class="bubble-box">
                       <ion-icon id="reminder-pomo-icon" name="time-outline"></ion-icon>
-                      <span>:</span>
+                      <input type="number" id="form-time" name="time" min="1" max="8" placeholder="1-8" required/>
+                      <input type="date" id="form-date" name="date" required/>
                     </div>
-                    <input type="number" id="quantity" name="quantity" min="0" max="8" placeholder="0-8">
-                    <div class="date">
-                        <input type="date" id="date-start" name="date">
-                         <!-- value="2018-07-22" -->
-                         <!-- min="2018-01-01" max="2018-12-31"> -->
+                    <div class="bubble-box">
+                      <select id="form-tag" name="tag">
+                        <option value="Tag">Choose Tag</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Work">Work</option>
+                        <option value="Other">Other</option>
+                      </select>
                     </div>
-                  </div>
-                  <div class="submit">
-                    <div class="submit-button">
-                        <ion-icon name="checkmark-outline"></ion-icon>
-                    </div>
-                    <div class="submit-button">
-                        <ion-icon name="close-outline"></ion-icon>
-                    </div>
-                  </div>
+                    <ion-button id="form-submit" type="submit">
+                      <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+                    </ion-button>
+                  </form>
                 </div>
               </div>
               <div class="create_mask" id="close-mask">
