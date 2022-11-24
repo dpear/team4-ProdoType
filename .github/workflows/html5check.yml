@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 # Requried will all actions
+      # run: echo ${{ github.repository }}
+      with: 
+        ref: refactor-dev-cicd
     - name: Checks HTML5
       uses: Cyb3r-Jak3/html5validator-action
       with:
@@ -24,4 +27,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: log
-        path: refactoring/
+        path: log.log
