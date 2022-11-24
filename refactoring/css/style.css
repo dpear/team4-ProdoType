@@ -60,12 +60,14 @@ body {
 }
 
 .open {
-    visibility: visible;
+    display: block;
+    /* visibility: visible; */
     animation: ease 0.5s open;
 }
 
 .close {
-    visibility: hidden;
+    display: none;
+    /* visibility: hidden; */
     animation: ease 0.5s close;
 }
 
@@ -81,11 +83,13 @@ body {
 @keyframes close {
     0% {
         top: 0;
-        visibility: visible;
+        display: block;
+        /* visibility: visible; */
     }
     100% {
         top: -500px;
-        visibility: visible;
+        display: block;
+        /* visibility: visible; */
     }
 }
 

@@ -72,10 +72,10 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
             <div class="time-line-card-buttons">
               ${
                 !item.isDone ?
-                `<div class="time-line-card-button time-line-card-button-play">
+                `<div key=${index} class="time-line-card-button time-line-card-button-play">
                   <ion-icon name="play-outline"></ion-icon>
                 </div>
-                <div class="time-line-card-button time-line-card-button-delete">
+                <div key=${index} class="time-line-card-button time-line-card-button-delete">
                   <ion-icon name="trash-outline"></ion-icon>
                 </div>` : ''
               }
@@ -95,7 +95,22 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
         listContainer.appendChild(card)
       })
   }
+
+  const listenStartBtnClicked = () => {
+    const taskStartBtns = document.querySelectorAll('time-line-card-button-play')
+    console.log(taskStartBtns)
+    taskStartBtns.forEach(tsBtn => {
+      tsBtn.addEventListener('click', () => {
+        taskIdx = Number(tsBtn.getAttribute('key'))
+        let taskInfo = state.items[taskIdx]
+        const tabs = document.querySelectorAll('[data-main-tab-target]')
+        tabs[0].click()
+      })
+    })
+  }
   
+
   renderList(state);
   listenFilterBtnClicked(state);
   listenCreateBtnClicked(state);
+  listenStartBtnClicked();

@@ -25,6 +25,12 @@
     flex: 1;
 }
 
+#create-task-dialogue .bubble-box span {
+    height: 100%;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
 #create-task-dialogue .bubble-box input[type="text"] {
     overflow: hidden;
     display: flex;
