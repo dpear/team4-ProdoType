@@ -9,8 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: | 
-      echo $GITHUB_WORKSPACE
+    - run: echo "$GITHUB_WORKSPACE"
     - uses: actions/checkout@v2 # Requried will all actions
       # run: echo ${{ github.repository }}
       with: 
