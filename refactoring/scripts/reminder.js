@@ -8,6 +8,7 @@ const createTaskButton = document.querySelector("#create-task")
 
 form.reset();
 formSubmit.disabled = true;
+const cur_date = new Date().toJSON().slice(0, 10);
 
 createTaskButton.addEventListener("click", () => form.reset())
 formTitle.addEventListener("change", formState);
@@ -22,7 +23,8 @@ function formState() {
         formSubmit.disabled = true;
     }
     // Validate input values (TODO: Date)
-    else if (formTime.value < 1 || formTime.value > 8) {
+    else if (formTime.value < 1 || formTime.value > 8 ||
+             new Date(formDate.value) < new Date(cur_date)) {
         formSubmit.disabled = true;
     }
     else {
