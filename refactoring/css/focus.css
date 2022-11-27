@@ -226,6 +226,10 @@
     display: none;
 }
 
+.start #action-finish {
+    display: none;
+}
+
 /* .start::before {
     content: "";
     position: absolute;

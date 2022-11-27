@@ -13,9 +13,8 @@ const timeShow = document.querySelectorAll('.time')
 //pomodoro's three contents' buttions
 const startBtn = document.querySelectorAll('.start')
 const playBtns = document.querySelectorAll('#action-play')
-console.log(playBtns)
+const finishBtns = document.querySelectorAll('#action-finish')
 const pauseBtns = document.querySelectorAll('#action-pause')
-const resetBtn = document.querySelectorAll('.reset')
 const pomoNumberCompleted = document.getElementById('pomo-completed')
 const pomoNumberExpected = document.getElementById('pomo-expected')
 
@@ -44,7 +43,7 @@ var localstate = {
 
 //Beep sound for pomodoro when complete one, there are three diffirent audios stored in the src, the three audiso correspond to three content's completed remind sound(focus, short break, long break). 
 timer.forEach(element => {
-    const audio = new Audio(`../src/sounds/${element.sound}`)
+    const audio = new Audio(`./src/sounds/${element.sound}`)
     audio.loop = true
     audios.push(audio)
 })
@@ -156,8 +155,10 @@ startBtn.forEach((element, index) => {
         if (globalTime == 0) {
             globalTime = calculateTotalSeconds(timer[index])
             elementTime(timeShow[index], globalTime)
-            pomoCompleted += 1
-            pomoNumberCompleted.innerHTML = String(pomoCompleted)
+            if(element.classList.contains("focus-type")) {
+                pomoCompleted += 1
+                pomoNumberCompleted.innerHTML = String(pomoCompleted)
+            }
         }
         element.classList.toggle(ACTIVE)
         const isActive = element.classList.contains(ACTIVE)
@@ -188,11 +189,19 @@ startBtn.forEach((element, index) => {
 function showPlay(index) {
     playBtns[index].style.display = 'block'
     pauseBtns[index].style.display = 'none'
+    finishBtns[index].style.display = 'none'
 }
 
 function showPause(index) {
     playBtns[index].style.display = 'none'
     pauseBtns[index].style.display = 'block'
+    finishBtns[index].style.display = 'none'
+}
+
+function showFinish(index) {
+    playBtns[index].style.display = 'none'
+    pauseBtns[index].style.display = 'none'
+    finishBtns[index].style.display = 'block'
 }
 
 
@@ -210,12 +219,12 @@ function start(index, element, time) {
             --globalTime
             if (time <= 0) {
                 clearInterval(handle)
-                startBtn[index].textContent = "Completed"
+                showFinish(index)
                 audios[index].play()
             }
         }, 1000)
     } else {
-        startBtn[index].textContent = "Completed"
+        showFinish(index)
         audios[index].play()
     }
     return handle
