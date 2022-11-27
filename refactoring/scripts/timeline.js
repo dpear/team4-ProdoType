@@ -1,3 +1,8 @@
+import { renderTitle } from "./focus.js"
+
+const DATA = "data"
+const ACTIVEIDX = "activeIndex"
+
 const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     return {
       title, date, tag, tomatoCount, isDone,
@@ -23,6 +28,11 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     filter: {
       isDone: false,
     }
+  }
+
+  const loadData = (state, idx) => {
+    localStorage.setItem(DATA, JSON.stringify(state))
+    localStorage.setItem(ACTIVEIDX, idx)
   }
   
   const listenFilterBtnClicked = (state) => {
@@ -104,12 +114,14 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
         let taskIdx = Number(tsBtn.getAttribute('key'))
         let taskInfo = state.items[taskIdx]
         const tabs = document.querySelectorAll('[data-main-tab-target]')
+        localStorage.setItem(ACTIVEIDX, taskIdx)
+        renderTitle()
         tabs[0].click()
       })
     })
   }
   
-
+  loadData(state, -1)
   renderList(state);
   listenFilterBtnClicked(state);
   listenCreateBtnClicked(state);

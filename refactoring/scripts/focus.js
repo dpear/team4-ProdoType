@@ -2,6 +2,8 @@ import { timer } from "../src/data/db.js";
 console.log(timer)
 
 const ACTIVE = 'active'
+const DATA = "data"
+const ACTIVEIDX = "activeIndex"
 
 //pomodoro's tabs
 const focusTabs = document.querySelectorAll('[data-tab-target]')
@@ -80,29 +82,34 @@ function addZero(time) {
     return (+time < 10 && +time >= 0) ? `0${time}` : time
 }
 
-const renderTtile = (state) => {
+const renderTitle = () => {
     const pomoAnnotation = document.getElementById("focus-annotation");
     const pomoTaskTitle = document.getElementById("current-task");
     const pomoAmount = document.getElementById("pomo-amount");
     const pomoNumberCompleted = document.getElementById("pomo-completed");
     const pomoNumberExpected = document.getElementById("pomo-expected");
-    
-    //a data sharing with 3 page
-    state.globalTime = 0
-  
-    if (state.title.length > 0) {
-      pomoTaskTitle.innerHTML = state.title;
-      pomoAnnotation.style.width = "85%";
-      pomoAmount.style.display = "flex";
-      pomoNumberExpected.innerHTML = "10";
+
+    if (localStorage.getItem(DATA) != null && localStorage.getItem(ACTIVEIDX) != null && localStorage.getItem(ACTIVEIDX) >= 0) {
+        let curIdx = Number.parseInt(localStorage.getItem(ACTIVEIDX))
+        let curData = localStorage.getItem("data")
+        var dataObj = JSON.parse(curData)
+        var taskItems = dataObj["items"]
+        var taskTitle = taskItems[curIdx]["title"]
+        var tomatoExpected = taskItems[curIdx]["tomatoCount"]
+
+        pomoTaskTitle.innerHTML = taskTitle;
+        pomoAnnotation.style.width = "85%";
+        pomoAmount.style.display = "flex";
+        pomoNumberExpected.innerHTML = String(tomatoExpected );
+
     } else {
-      pomoTaskTitle.innerHTML = "Let's tomato!";
-      pomoAnnotation.style.width = "50%";
-      pomoAmount.style.display = "none";
-      pomoNumberExpected.innerHTML = String(0);
-      pomoNumberCompleted.innerHTML = String(state.tomatoCompleted);
+        pomoTaskTitle.innerHTML = "Let's tomato!";
+        pomoAnnotation.style.width = "50%";
+        pomoAmount.style.display = "none";
+        pomoNumberExpected.innerHTML = String(0);
+        pomoNumberCompleted.innerHTML = String(0);
     }
-  };
+}; 
 
 //same logic as mainTabs
 focusTabs.forEach((tab, index) => {
@@ -123,9 +130,7 @@ focusTabs.forEach((tab, index) => {
         globalTime = calculateTotalSeconds(timer[index])
         console.log(tab.dataset.tabTarget)
         if(tab.dataset.tabTarget == "#focus-time") {
-            renderTtile(localstate)
-            // pomoNumberExpected.innerHTML = String(pomoAmountExpected)
-            // pomoNumberCompleted.innerHTML = String(pomoCompleted)
+            renderTitle()
         }
     }
 })
@@ -216,6 +221,6 @@ function start(index, element, time) {
     return handle
 }
 
-export default function getIntervalId() {
-    return '123';
-}
+renderTitle()
+
+export {renderTitle}
