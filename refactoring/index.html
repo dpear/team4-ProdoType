@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="css/reminder.css" />
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script type="module" src="scripts/script.js" ></script>
     <script type="module" src="scripts/focus.js" ></script>
+    <script type="module" src="scripts/script.js" ></script>
     <script type="module" src="scripts/timeline.js" ></script>
     <script type="module" src="scripts/reminder.js" ></script>
 </head>
@@ -30,9 +30,9 @@
             </div>
               <div class="content">
                 <div id="focus-time" class="active" data-tab-content>
-                  <div class="annotation">
-                    <div class="focusing-task-tile">
-                      <span>“What are you going to work on?” - </span>
+                  <div class="annotation" id="focus-annotation">
+                    <div class="focusing-task-tile" id="current-task">
+                      <span>Let's tomato!</span>
                     </div>
                     <div id="pomo-amount">
                       <ion-icon id="pomo-icon" name="time-outline"></ion-icon>

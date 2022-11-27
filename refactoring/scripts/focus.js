@@ -19,43 +19,32 @@ const pomoNumberExpected = document.getElementById('pomo-expected')
 
 const audios = []
 
-let handle
+let handle = 0
 let pause
 let globalTime
 let pomoAmountExpected = 8
 let pomoCompleted = 0
 // let globalTime = calculateTotalSeconds(timer[0])
 
+//import method
+
+// const getIntervalId = () => {
+//     return handle
+// }
+
+var localstate = {
+    globalTime: 0,
+    tomatoCompleted: 0,
+    toamtoExpected: 10,
+    timer: timer,
+    title: "111",
+  };
+
 //Beep sound for pomodoro when complete one, there are three diffirent audios stored in the src, the three audiso correspond to three content's completed remind sound(focus, short break, long break). 
 timer.forEach(element => {
     const audio = new Audio(`../src/sounds/${element.sound}`)
     audio.loop = true
     audios.push(audio)
-})
-
-//same logic as mainTabs
-focusTabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => {
-        focusTabContent.forEach(content => {
-            content.classList.remove(ACTIVE)
-        })
-        focusTabs.forEach(tab => {
-            tab.classList.remove(ACTIVE)
-        })
-        tab.classList.toggle(ACTIVE)
-        const target = document.querySelector(tab.dataset.tabTarget)
-        target.classList.toggle(ACTIVE)
-        globalTime = calculateTotalSeconds(timer[index])
-        elementTime(timeShow[index], globalTime)
-    })
-    if(tab.classList.contains(ACTIVE)) {
-        globalTime = calculateTotalSeconds(timer[index])
-        console.log(tab.dataset.tabTarget)
-        if(tab.dataset.tabTarget == "#focus-time") {
-            pomoNumberExpected.innerHTML = String(pomoAmountExpected)
-            pomoNumberCompleted.innerHTML = String(pomoCompleted)
-        }
-    }
 })
 
 //get the timer configuration from imported timer, the length for focus, short break and long-break
@@ -90,6 +79,56 @@ function calculateTime(time) {
 function addZero(time) {
     return (+time < 10 && +time >= 0) ? `0${time}` : time
 }
+
+const renderTtile = (state) => {
+    const pomoAnnotation = document.getElementById("focus-annotation");
+    const pomoTaskTitle = document.getElementById("current-task");
+    const pomoAmount = document.getElementById("pomo-amount");
+    const pomoNumberCompleted = document.getElementById("pomo-completed");
+    const pomoNumberExpected = document.getElementById("pomo-expected");
+    
+    //a data sharing with 3 page
+    state.globalTime = 0
+  
+    if (state.title.length > 0) {
+      pomoTaskTitle.innerHTML = state.title;
+      pomoAnnotation.style.width = "85%";
+      pomoAmount.style.display = "flex";
+      pomoNumberExpected.innerHTML = "10";
+    } else {
+      pomoTaskTitle.innerHTML = "Let's tomato!";
+      pomoAnnotation.style.width = "50%";
+      pomoAmount.style.display = "none";
+      pomoNumberExpected.innerHTML = String(0);
+      pomoNumberCompleted.innerHTML = String(state.tomatoCompleted);
+    }
+  };
+
+//same logic as mainTabs
+focusTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+        focusTabContent.forEach(content => {
+            content.classList.remove(ACTIVE)
+        })
+        focusTabs.forEach(tab => {
+            tab.classList.remove(ACTIVE)
+        })
+        tab.classList.toggle(ACTIVE)
+        const target = document.querySelector(tab.dataset.tabTarget)
+        target.classList.toggle(ACTIVE)
+        globalTime = calculateTotalSeconds(timer[index])
+        elementTime(timeShow[index], globalTime)
+    })
+    if(tab.classList.contains(ACTIVE)) {
+        globalTime = calculateTotalSeconds(timer[index])
+        console.log(tab.dataset.tabTarget)
+        if(tab.dataset.tabTarget == "#focus-time") {
+            renderTtile(localstate)
+            // pomoNumberExpected.innerHTML = String(pomoAmountExpected)
+            // pomoNumberCompleted.innerHTML = String(pomoCompleted)
+        }
+    }
+})
 
 /*
 Set Click listener for start button, the original text displayed is "Start"
@@ -128,9 +167,10 @@ startBtn.forEach((element, index) => {
             //     calculateTotalSeconds(timer[index]))
             handle = start(index, timeShow[index],
                 globalTime)
+            console.log(handle)
         } else {
             //pause
-            pause = true
+            // pause = true
             clearInterval(handle)
             // const totalTime = calculateTotalSeconds(timer[index])
             // elementTime(timeShow[index], totalTime)
@@ -176,15 +216,6 @@ function start(index, element, time) {
     return handle
 }
 
-resetBtn.forEach((element, index) => {
-    element.addEventListener('click', () => {
-        clearInterval(handle)
-        globalTime = calculateTotalSeconds(timer[index])
-        elementTime(timeShow[index], globalTime)
-        const isActive = startBtn[index].classList.contains(ACTIVE)
-        if(isActive) {
-            startBtn[index].classList.remove(ACTIVE)
-        }
-        startBtn[index].textContent = "Start"
-    })
-})
+export default function getIntervalId() {
+    return '123';
+}

@@ -98,17 +98,21 @@
     align-items: center;
     width: 85%;
     height: 10%;
-    background-color: var(--primary-color-deep);
+    /* background-color: var(--primary-color-deep); */
     margin-top: var(--start-margin-top);
     margin-bottom: var(--start-margin-top);
-    border-radius: var(--box-radius);
+    /* border-radius: var(--box-radius); */
 }
 
-#focus-time .annotation .focusing-task-tile > span {
+#focus-time .annotation .focusing-task-tile {
+    display: flex;
     font-size: var(--internal-title-font-size);
-    overflow: hidden;
-    width: 80%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
     height: 100%;
+    background-color: var(--primary-color-deep);
+    border-radius: var(--box-radius);
 }
 
 #focus-time .annotation #pomo-amount {
@@ -116,10 +120,13 @@
     justify-content: center;
     align-items: center;
     width: 20%;
-    height: 80%;
+    height: 100%;
     position: relative;
     overflow: hidden;
-    margin-left: 5px;
+    margin-left: 10px;
+    padding: 5px;
+    background-color: var(--primary-color-deep);
+    border-radius: var(--box-radius);
 }
 
 #focus-time .annotation #pomo-amount #pomo-icon {
@@ -130,6 +137,7 @@
     flex-grow: 1;
     font-size: 18px;
     color: var(--background-black);
+    margin-right: 5px;
 }
 
 #focus-time .annotation #pomo-amount > span {
