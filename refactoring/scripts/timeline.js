@@ -1,4 +1,4 @@
-import { renderTitle } from "./focus.js"
+import { initialPomo, renderTitle } from "./focus.js"
 
 const DATA = "data"
 const ACTIVEIDX = "activeIndex"
@@ -116,6 +116,7 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
         const tabs = document.querySelectorAll('[data-main-tab-target]')
         localStorage.setItem(ACTIVEIDX, taskIdx)
         renderTitle()
+        initialPomo()
         tabs[0].click()
       })
     })
