@@ -57,6 +57,7 @@ timer.forEach((element) => {
 const renderTitle = () => {
   const pomoAnnotation = document.getElementById("focus-annotation");
   const pomoTaskTitle = document.getElementById("current-task");
+  const pomoCompletedBtn = document.getElementById("task-completed");
   const pomoAmount = document.getElementById("pomo-amount");
   const pomoNumberCompleted = document.getElementById("pomo-completed");
   const pomoNumberExpected = document.getElementById("pomo-expected");
@@ -78,13 +79,22 @@ const renderTitle = () => {
     pomoAmount.style.display = "flex";
     pomoNumberExpected.innerHTML = String(tomatoExpected);
   } else {
-    pomoTaskTitle.innerHTML = "Let's tomato!";
+    pomoTaskTitle.innerHTML = "Let's tomato 🍅";
     pomoAnnotation.style.width = "50%";
     pomoAmount.style.display = "none";
     pomoNumberExpected.innerHTML = String(0);
     pomoNumberCompleted.innerHTML = String(0);
   }
 };
+
+const completedBtnListenerCreate = () => {
+  const pomoCompletedBtn = document.getElementById("task-completed");
+  pomoCompletedBtn.addEventListener("click", () => {
+    localStorage.setItem(ACTIVEIDX, -1);
+      renderTitle()
+      initialPomo()
+  })
+}
 
 //same logic as mainTabs
 focusTabs.forEach((tab, index) => {
@@ -187,5 +197,6 @@ function start(index, element, time) {
 
 renderTitle();
 initialPomo();
+completedBtnListenerCreate();
 
 export { renderTitle, initialPomo };
