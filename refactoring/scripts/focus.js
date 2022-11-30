@@ -22,19 +22,15 @@ let globalTime = 0;
 let pomoAmountExpected = 8;
 let pomoCompleted = 0;
 
-const initialPomo = () => {
-  clearInterval(handle);
-  globalTime = calculateTotalSeconds(timer[0]);
-  const timeShow = document.querySelectorAll(".time");
-  timeShow.forEach((element, index) => {
-    const totalTime = calculateTotalSeconds(timer[index]);
-    elementTime(element, totalTime);
-  });
+const initializePomoBtn = () => {
   const startBtn = document.querySelectorAll(".start");
   startBtn.forEach((element, index) => {
     showPlay(index);
     element.classList.remove(ACTIVE);
   });
+}
+
+const initializeFocusTab = () => {
   const focusTabs = document.querySelectorAll("[data-tab-target]");
   focusTabs.forEach((tab, index) => {
     tab.classList.add(ACTIVE);
@@ -45,6 +41,18 @@ const initialPomo = () => {
       target.classList.remove(ACTIVE);
     }
   });
+}
+
+const initializePomo = () => {
+  clearInterval(handle);
+  globalTime = calculateTotalSeconds(timer[0]);
+  const timeShow = document.querySelectorAll(".time");
+  timeShow.forEach((element, index) => {
+    const totalTime = calculateTotalSeconds(timer[index]);
+    elementTime(element, totalTime);
+  });
+  initializePomoBtn();
+  initializeFocusTab();
 };
 
 //Beep sound for pomodoro when complete one, there are three diffirent audios stored in the src, the three audiso correspond to three content's completed remind sound(focus, short break, long break).
@@ -91,8 +99,8 @@ const completedBtnListenerCreate = () => {
   const pomoCompletedBtn = document.getElementById("task-completed");
   pomoCompletedBtn.addEventListener("click", () => {
     localStorage.setItem(ACTIVEIDX, -1);
-      renderTitle()
-      initialPomo()
+    renderTitle()
+    initializePomo()
   })
 }
 
@@ -108,6 +116,8 @@ focusTabs.forEach((tab, index) => {
     tab.classList.toggle(ACTIVE);
     const target = document.querySelector(tab.dataset.tabTarget);
     target.classList.toggle(ACTIVE);
+    clearInterval(handle)
+    initializePomoBtn()
     globalTime = calculateTotalSeconds(timer[index]);
     elementTime(timeShow[index], globalTime);
   });
@@ -196,7 +206,7 @@ function start(index, element, time) {
 }
 
 renderTitle();
-initialPomo();
+initializePomo();
 completedBtnListenerCreate();
 
-export { renderTitle, initialPomo };
+export { renderTitle, initializePomo };
