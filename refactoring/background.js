@@ -17,22 +17,22 @@ function elementTime(element, time) {
     }
 }
 
-let handler = null
-let audio = null
+let handler = null 
 let globalTime = null
+let audioPath = "/src/sounds/car"
+let audio = null
 
-function start(index, element, time, button, media) {
+function start(index, element, time, button) {
     if (time) {
         globalTime = time
-        audio = media
         handler = setInterval(() => {
             globalTime--
             elementTime(element, --time) 
             if (time <= 0) {
                 clearInterval(handler)
                 button.textContent = "Completed"
-                // FIXME: Hard-coding the audio path. 
-                audio = new Audio(`/src/sounds/car2.wav`);
+                let audioIdx = index + 1
+                audio = new Audio(audioPath + audioIdx + ".wav");
                 audio.play();
             }
         }, 1000)
@@ -47,3 +47,6 @@ function pause() {
     return globalTime
 }
 
+function interrupt() {
+    clearInterval(handler)
+}
