@@ -37,10 +37,10 @@
 body {
     height: 100vh;
     background: var(--background-black);
-    display: flex;
+    display: flex;    
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 400px;
+    height: 500px;
 }
 
 .container {
@@ -50,7 +50,7 @@ body {
     height: 500px;
     position: relative;
     overflow: hidden;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 
 .container .page {

@@ -1,6 +1,9 @@
 import { timer } from "../src/data/db.js";
 import { calculateTotalSeconds, elementTime } from "./utility.js";
 
+var backgroundPage = chrome.extension.getBackgroundPage();
+console.log("background page is ", backgroundPage);
+
 const ACTIVE = "active";
 const DATA = "data";
 const ACTIVEIDX = "activeIndex";
@@ -156,11 +159,11 @@ startBtn.forEach((element, index) => {
       showPlay(index);
     }
     if (isActive) {
-      handle = start(index, timeShow[index], globalTime);
-      console.log(handle);
+      backgroundPage.start(index, timeShow[index], 
+        globalTime, startBtn[index], audios[index])
     } else {
-      clearInterval(handle);
-      elementTime(timeShow[index], globalTime);
+      globalTime = backgroundPage.pause()
+      elementTime(timeShow[index], globalTime)
     }
   });
 });
@@ -183,27 +186,27 @@ function showFinish(index) {
   finishBtns[index].style.display = "block";
 }
 
-/*
-Timer logic:
-*/
-function start(index, element, time) {
-  let handle = null;
-  if (time) {
-    handle = setInterval(() => {
-      elementTime(element, --time);
-      --globalTime;
-      if (time <= 0) {
-        clearInterval(handle);
-        showFinish(index);
-        audios[index].play();
-      }
-    }, 1000);
-  } else {
-    showFinish(index);
-    audios[index].play();
-  }
-  return handle;
-}
+// /*
+// Timer logic:
+// */
+// function start(index, element, time) {
+//   let handle = null;
+//   if (time) {
+//     handle = setInterval(() => {
+//       elementTime(element, --time);
+//       --globalTime;
+//       if (time <= 0) {
+//         clearInterval(handle);
+//         showFinish(index);
+//         audios[index].play();
+//       }
+//     }, 1000);
+//   } else {
+//     showFinish(index);
+//     audios[index].play();
+//   }
+//   return handle;
+// }
 
 renderTitle();
 initializePomo();
