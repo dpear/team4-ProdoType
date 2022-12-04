@@ -273,7 +273,7 @@ startBtn.forEach((element, index) => {
       // backgroundPage.start(index, timeShow[index], 
       //   backgroundPage.getGlobalTime(), startBtn[index], audios[index])
       backgroundPage.start(index, timeShow[index], 
-        backgroundPage.getGlobalTime(), startBtn[index], audios[index])
+        backgroundPage.getGlobalTime())
     } else {
       backgroundPage.interrupt()
       elementTime(timeShow[index], backgroundPage.getGlobalTime())

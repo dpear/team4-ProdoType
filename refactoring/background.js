@@ -19,8 +19,10 @@ function elementTime(element, time) {
 
 let handler = null 
 let globalTime = null
+let audioPath = "/src/sounds/car"
+let audio = null
 
-function start(index, element, time, button, media) {
+function start(index, element, time) {
     if (time) {
         globalTime = time
         handler = setInterval(() => {
@@ -29,12 +31,14 @@ function start(index, element, time, button, media) {
             if (time <= 0) {
                 clearInterval(handler)
                 notifyComplete(index);
-                media.play();
+                let audioIdx = index + 1
+                audio = new Audio(audioPath + audioIdx + ".wav");
+                audio.play();
             }
         }, 1000)
     } else {
         notifyComplete(index);
-        media.play();
+        audio.play();
     }
 }
 

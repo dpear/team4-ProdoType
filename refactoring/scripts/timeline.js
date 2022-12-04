@@ -41,10 +41,12 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     upcomingBtn.addEventListener('click', () => {
       state.filter.isDone = false;
       renderList(state);
+      listenStartBtnClicked();
     })
     doneBtn.addEventListener('click', () => {
       state.filter.isDone = true;
       renderList(state);
+      listenStartBtnClicked();
     })
   }
   
