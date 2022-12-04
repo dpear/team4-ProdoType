@@ -272,13 +272,19 @@ startBtn.forEach((element, index) => {
     if (isActive) {
       // backgroundPage.start(index, timeShow[index], 
       //   backgroundPage.getGlobalTime(), startBtn[index], audios[index])
-      backgroundPage.start(timeShow[index], backgroundPage.getGlobalTime(), 
-        startBtn[index], audios[index])
+      backgroundPage.start(index, timeShow[index], 
+        backgroundPage.getGlobalTime(), startBtn[index], audios[index])
     } else {
       backgroundPage.interrupt()
       elementTime(timeShow[index], backgroundPage.getGlobalTime())
     }
   });
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.msg == "timer_completion") {
+    showFinish(message.data.content);
+  }
 });
 
 function showPlay(index) {

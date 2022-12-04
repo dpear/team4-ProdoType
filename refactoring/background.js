@@ -20,7 +20,7 @@ function elementTime(element, time) {
 let handler = null 
 let globalTime = null
 
-function start(element, time, button, media) {
+function start(index, element, time, button, media) {
     if (time) {
         globalTime = time
         handler = setInterval(() => {
@@ -28,14 +28,23 @@ function start(element, time, button, media) {
             elementTime(element, --time) 
             if (time <= 0) {
                 clearInterval(handler)
-                button.textContent = "Completed"
+                notifyComplete(index);
                 media.play();
             }
         }, 1000)
     } else {
-        button.textContent = "Completed"
-        media.play()
+        notifyComplete(index);
+        media.play();
     }
+}
+
+function notifyComplete(index) {
+    chrome.runtime.sendMessage({
+        msg: "timer_completion",
+        data: {
+            content: index
+        }
+    });
 }
 
 function interrupt() {
