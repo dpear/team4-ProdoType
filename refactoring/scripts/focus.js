@@ -20,8 +20,8 @@ const pomoNumberExpected = document.getElementById("pomo-expected");
 
 const audios = [];
 
-let handle = -1;
-let globalTime = 0;
+// let handle = -1;
+// let globalTime = 0;
 let pomoAmountExpected = 8;
 let pomoCompleted = 0;
 
@@ -169,8 +169,10 @@ const renderTitleFromState = (state) => {
 }
 
 const initializePomo = () => {
-  clearInterval(handle);
-  globalTime = calculateTotalSeconds(timer[0]);
+  // clearInterval(handle);
+  backgroundPage.interrupt();
+  backgroundPage.setGlobalTime(calculateTotalSeconds(timer[0]));
+  // globalTime = calculateTotalSeconds(timer[0]);
   renderTitle();
   initializeFocusTab();
   initializeTimer();
@@ -216,10 +218,12 @@ focusTabs.forEach((tab, index) => {
 
 
     //manually initialize
-    clearInterval(handle);
+    // clearInterval(handle);
+    backgroundPage.interrupt()
     initializePomoBtn();
-    globalTime = calculateTotalSeconds(timer[index]);
-    elementTime(timeShow[index], globalTime);
+    backgroundPage.setGlobalTime(calculateTotalSeconds(timer[index]));
+    // globalTime = calculateTotalSeconds(timer[index]);
+    elementTime(timeShow[index], calculateTotalSeconds(timer[index]));
 
     //Option1: clearing timer when switch tab db connected
     //1.clear timer 2.initialize a state:only time change 3.put in
@@ -246,9 +250,11 @@ startBtn.forEach((element, index) => {
   element.addEventListener("click", () => {
     audios[index].pause();
     audios[index].currentTime = 0;
-    if (globalTime == 0) {
-      globalTime = calculateTotalSeconds(timer[index]);
-      elementTime(timeShow[index], globalTime);
+    if (backgroundPage.getGlobalTime() == 0) {
+    // if (globalTime == 0) {
+      // globalTime = calculateTotalSeconds(timer[index]);
+      backgroundPage.setGlobalTime(calculateTotalSeconds(timer[index]));
+      elementTime(timeShow[index], calculateTotalSeconds(timer[index]));
       if (element.classList.contains("focus-type")) {
         pomoCompleted += 1;
         pomoNumberCompleted.innerHTML = String(pomoCompleted);
@@ -264,11 +270,14 @@ startBtn.forEach((element, index) => {
       showPlay(index);
     }
     if (isActive) {
+      // backgroundPage.start(index, timeShow[index], 
+      //   globalTime, startBtn[index], audios[index])
       backgroundPage.start(index, timeShow[index], 
-        globalTime, startBtn[index], audios[index])
+        backgroundPage.getGlobalTime(), startBtn[index], audios[index])
     } else {
-      globalTime = backgroundPage.pause()
-      elementTime(timeShow[index], globalTime)
+      // globalTime = backgroundPage.pause()
+      backgroundPage.pause()
+      elementTime(timeShow[index], backgroundPage.getGlobalTime())
     }
   });
 });

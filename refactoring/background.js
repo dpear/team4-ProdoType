@@ -50,3 +50,11 @@ function pause() {
 function interrupt() {
     clearInterval(handler)
 }
+
+function getGlobalTime() {
+    return globalTime
+}
+
+function setGlobalTime(time) {
+    globalTime = time
+}
