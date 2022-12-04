@@ -271,12 +271,11 @@ startBtn.forEach((element, index) => {
     }
     if (isActive) {
       // backgroundPage.start(index, timeShow[index], 
-      //   globalTime, startBtn[index], audios[index])
-      backgroundPage.start(index, timeShow[index], 
-        backgroundPage.getGlobalTime(), startBtn[index], audios[index])
+      //   backgroundPage.getGlobalTime(), startBtn[index], audios[index])
+      backgroundPage.start(timeShow[index], backgroundPage.getGlobalTime(), 
+        startBtn[index], audios[index])
     } else {
-      // globalTime = backgroundPage.pause()
-      backgroundPage.pause()
+      backgroundPage.interrupt()
       elementTime(timeShow[index], backgroundPage.getGlobalTime())
     }
   });
