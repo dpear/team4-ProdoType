@@ -54,19 +54,38 @@
     color: var(--text-color);
 }
 
+#create-task-dialogue #number-date-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    width: 85%;
+}
+
+#create-task-dialogue #number-date-div .bubble-box {
+    height: 100%;
+}
+
+#create-task-dialogue #number-date-div .bubble-box:first-child {
+    margin-right: 1%;
+}
+
 #create-task-dialogue #reminder-pomo-icon {
-    width: 15%;
+    width: 30%;
     font-size: 20px;
     color: var(--text-color);
     object-fit: cover;
 }
 
 #create-task-dialogue input[type="number"] {
-    width: 15%;
+    width: 40%;
     background: var(--primary-color);
     border: none;
     color: var(--text-color);
     text-align: center;
+    border: solid 1px var(--text-color);
+    border-radius: var(--box-radius);
     -moz-appearance: textfield; /* Firefox No Arrows */
 }
 
@@ -81,14 +100,35 @@
 }
 
 #create-task-dialogue input[type="date"] {
-    width: 60%;
     background-color: var(--primary-color-deep);
     border: none;
     color: var(--text-color);
     text-align: center;
     border-radius: var(--box-radius);
-    margin-right: 2%;
-    margin-left: 2%;
+    height: 100%;
+    width: 100%;
+    /* Date Picker Only */
+    display: inline-block;
+    position: relative;
+}
+
+/* Date Picker Only */
+#create-task-dialogue input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* No Placeholder on Click */
+#create-task-dialogue input:focus::placeholder {
+    color: transparent;
 }
 
 #create-task-dialogue select {
@@ -115,10 +155,21 @@
     border: none;
 }
 
+/* Suppress Mouse-Over Text */
+#create-task-dialogue button ion-icon {
+    pointer-events: none;
+}
+
+/* Disabled Submit Button */
 #create-task-dialogue button:disabled {
     opacity: 0.6;
     cursor: auto;
-    pointer-events: none;
+}
+
+/* Don't change on Hover when Disabled */
+#create-task-dialogue button:disabled:hover {
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
 }
 
 #create-task-dialogue button:hover {
