@@ -271,15 +271,20 @@ startBtn.forEach((element, index) => {
     }
     if (isActive) {
       // backgroundPage.start(index, timeShow[index], 
-      //   globalTime, startBtn[index], audios[index])
+      //   backgroundPage.getGlobalTime(), startBtn[index], audios[index])
       backgroundPage.start(index, timeShow[index], 
-        backgroundPage.getGlobalTime(), startBtn[index], audios[index])
+        backgroundPage.getGlobalTime())
     } else {
-      // globalTime = backgroundPage.pause()
-      backgroundPage.pause()
+      backgroundPage.interrupt()
       elementTime(timeShow[index], backgroundPage.getGlobalTime())
     }
   });
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.msg == "timer_completion") {
+    showFinish(message.data.content);
+  }
 });
 
 function showPlay(index) {

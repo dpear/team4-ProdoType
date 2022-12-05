@@ -22,7 +22,7 @@ let globalTime = null
 let audioPath = "/src/sounds/car"
 let audio = null
 
-function start(index, element, time, button) {
+function start(index, element, time) {
     if (time) {
         globalTime = time
         handler = setInterval(() => {
@@ -30,21 +30,25 @@ function start(index, element, time, button) {
             elementTime(element, --time) 
             if (time <= 0) {
                 clearInterval(handler)
-                button.textContent = "Completed"
+                notifyComplete(index);
                 let audioIdx = index + 1
                 audio = new Audio(audioPath + audioIdx + ".wav");
                 audio.play();
             }
         }, 1000)
     } else {
-        button.textContent = "Completed"
-        audio.play()
+        notifyComplete(index);
+        audio.play();
     }
 }
 
-function pause() {
-    clearInterval(handler)
-    return globalTime
+function notifyComplete(index) {
+    chrome.runtime.sendMessage({
+        msg: "timer_completion",
+        data: {
+            content: index
+        }
+    });
 }
 
 function interrupt() {
