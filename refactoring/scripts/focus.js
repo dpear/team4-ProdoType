@@ -441,13 +441,4 @@ chrome.runtime.sendMessage({
   msg: "popup_opened"
 });
 
-
-// Chrome storage e.g
-const items = {"globalTime": 10000 }; 
-chrome.storage.local.set(items, () => {
-    if (chrome.runtime.lastError) {
-        console.error(chrome.runtime.lastError.message);
-    }
-});
-
 export { renderTitle, initializePomo };

@@ -33,6 +33,12 @@ function start(index, element, time) {
         globalTime = time
         handler = setInterval(() => {
             globalTime--
+            const item = {"globalTime": globalTime}; 
+            chrome.storage.local.set(item, () => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                }
+            });
             chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 if (message.msg == "popup_opened") {
                     var window = chrome.extension.getViews({
