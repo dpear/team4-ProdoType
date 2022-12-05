@@ -9,7 +9,8 @@ testing_button.forEach((element, index) => {
 });
 
 function getAllPomodoros(){
-    chrome.storage.local.get(["data"], function(result){
+    chrome.storage.local.get(["globalTime"], function(result){
         console.log("Retieved from Database" + result);
-});
+        console.log(result["globalTime"]);
+    });
 }
