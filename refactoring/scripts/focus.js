@@ -385,6 +385,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+chrome.runtime.sendMessage({
+  msg: "popup_opened",
+});
+
+
 function showPlay(index) {
   backgroundPage.setBtnStateIdx(0)
   playBtns[index].style.display = "block";

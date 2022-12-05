@@ -12,6 +12,7 @@ function calculateTime(time) {
 function elementTime(element, time) {
     const { hours, minutes, seconds } = calculateTime(time)
     console.log(element)
+    console.log("entering globaltime at ", time)
     element.textContent = `${minutes}:${seconds}`
     if (hours) {
         element.textContent = `${hours}:` + element.textContent
@@ -32,13 +33,24 @@ function start(index, element, time) {
         globalTime = time
         handler = setInterval(() => {
             globalTime--
-            elementTime(element, --time) 
-            if (time <= 0) {
+            chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+                if (message.msg == "popup_opened") {
+                    var window = chrome.extension.getViews({
+                        type: "popup"
+                    });
+                    if (window.length != 0) {
+                        element = window[0].document.querySelectorAll(".time")[index];
+                    }
+                }
+              });
+            elementTime(element, globalTime)
+            if (globalTime <= 0) {
                 clearInterval(handler)
                 notifyComplete(index);
                 let audioIdx = index + 1
                 audio = new Audio(audioPath + audioIdx + ".wav");
                 audio.play();
+                return;
             }
         }, 1000)
     } else {
