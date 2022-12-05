@@ -7,10 +7,14 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/focus.css" />
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script type="module" src="scripts/script.js" ></script>
+    <link rel="stylesheet" href="css/timeline.css" />
+    <link rel="stylesheet" href="css/reminder.css" />
+    <script type="module" src="ionicons/ionicons.esm.js"></script>
+    <script nomodule src="ionicons/ionicons.js"></script>
     <script type="module" src="scripts/focus.js" ></script>
+    <script type="module" src="scripts/script.js" ></script>
+    <script type="module" src="scripts/timeline.js" ></script>
+    <script type="module" src="scripts/reminder.js" ></script>
 </head>
 <body>
     <div class="container">
@@ -23,12 +27,17 @@
                   >Short Break</span
                 >
                 <span data-tab-target="#long-rest" class="focus-nav">Long Rest</span>
-              </div>
+            </div>
               <div class="content">
                 <div id="focus-time" class="active" data-tab-content>
-                  <div id="annotation">
-                    <div id="focusing-task-tile">
-                      <span>“What are you going to work on?” - </span>
+                  <div class="annotation" id="focus-annotation">
+                    <div class="focusing-task-tile">
+                      <div id="task-completed">
+                        <ion-icon id="action-task-complete" name="checkmark-circle-outline"></ion-icon>
+                      </div>
+                      <div id="current-task">
+                        <span>Let's tomato 🍅</span>
+                      </div>
                     </div>
                     <div id="pomo-amount">
                       <ion-icon id="pomo-icon" name="time-outline"></ion-icon>
@@ -40,16 +49,24 @@
                   <div class="time">
                     <span>23:45</span>
                   </div>
-                  <div class="start">
+                  <div class="start focus-type">
                     <div id="action-play" class="timer-button">
                         <ion-icon name="play-circle-outline"></ion-icon>
                     </div>
                     <div id="action-pause" class="timer-button">
                         <ion-icon name="pause-circle-outline"></ion-icon>
                     </div>
+                    <div id="action-finish" class="timer-button">
+                      <ion-icon name="checkbox-outline"></ion-icon>
+                    </div>
                   </div>
                 </div>
                 <div id="short-break" data-tab-content>
+                  <div class="annotation">
+                    <div class="focusing-task-tile">
+                      <span>Go grab a coffee ☕️ </span>
+                    </div>
+                  </div>
                   <div class="time">
                     <span>12:34</span>
                   </div>
@@ -60,9 +77,17 @@
                     <div id="action-pause" class="timer-button">
                         <ion-icon name="pause-circle-outline"></ion-icon>
                     </div>
+                    <div id="action-finish" class="timer-button">
+                      <ion-icon name="checkbox-outline"></ion-icon>
+                    </div>
                   </div>
                 </div>
                 <div id="long-rest" data-tab-content>
+                  <div class="annotation">
+                    <div class="focusing-task-tile">
+                      <span> Work out a bit 🏋🏻‍♀️</span>
+                    </div>
+                  </div>
                   <div class="time">
                     <span>43:21</span>
                   </div>
@@ -73,12 +98,61 @@
                     <div id="action-pause" class="timer-button">
                         <ion-icon name="pause-circle-outline"></ion-icon>
                     </div>
+                    <div id="action-finish" class="timer-button">
+                      <ion-icon name="checkbox-outline"></ion-icon>
+                    </div>
                   </div>
                 </div>
               </div>
         </div>
         <div id="timeline" class="page close" data-main-tab-content>
-            <span>Task</span>
+            <div class="operation-wrapper">
+              <div id = "create-task" class="timeline-button">
+                <ion-icon name="add-circle"></ion-icon>
+              </div>
+              <div class="switch-field">
+                <input type="radio" id="radio-one" name="switch-one" value="yes" checked/>
+                <label for="radio-one">Upcoming</label>
+                <input type="radio" id="radio-two" name="switch-one" value="no" />
+                <label for="radio-two">Completed</label>
+              </div>
+            </div>
+            <div id="time-line-list-container"></div>
+            <div class="create_dialog_wrapper" id="create_dialog_wrapper">
+              <div class="create_dialog">
+                <!-- todo: fill create dialog here -->
+                <div id="create-task-dialogue">
+                  <form id="form">
+                    <span id="reminder-header">New Task</span>
+                    <div class="bubble-box">
+                        <input type="text" id="form-title" name="title" placeholder="Enter Title" required/>
+                    </div>
+                    <div id="number-date-div">
+                      <div class="bubble-box">
+                        <ion-icon id="reminder-pomo-icon" name="time-outline"></ion-icon>
+                        <input type="number" id="form-time" name="time" min="1" max="8" placeholder="1-8" required/>
+                      </div>
+                      <div class="bubble-box">
+                        <input type="date" id="form-date" name="date" required/>
+                      </div>
+                    </div>
+                    <div class="bubble-box">
+                      <select id="form-tag" name="tag">
+                        <option value="Tag">Choose Tag</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Work">Work</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <button id="form-submit" type="button">
+                      <ion-icon name="add-circle"></ion-icon>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="create_mask" id="close-mask">
+              </div>
+            </div>
         </div>
         <div id="setting" class="page close" data-main-tab-content="">
             <span>setting</span>
