@@ -11,6 +11,7 @@ function calculateTime(time) {
 }
 function elementTime(element, time) {
     const { hours, minutes, seconds } = calculateTime(time)
+    console.log(element)
     element.textContent = `${minutes}:${seconds}`
     if (hours) {
         element.textContent = `${hours}:` + element.textContent
@@ -19,6 +20,10 @@ function elementTime(element, time) {
 
 let handler = null 
 let globalTime = null
+let lastFocusTab = -1
+let lastBtnState = -1
+let curTaskId = -1
+let curTaskTitle = ""
 let audioPath = "/src/sounds/car"
 let audio = null
 
@@ -61,4 +66,36 @@ function getGlobalTime() {
 
 function setGlobalTime(time) {
     globalTime = time
+}
+
+function getFocusTabIdx() {
+    return lastFocusTab
+}
+
+function setFocusTabIdx(idx) {
+    lastFocusTab = idx
+}
+
+function getBtnStateIdx() {
+    return lastBtnState
+}
+
+function setBtnStateIdx(idx) {
+    lastBtnState = idx
+}
+
+function getTaskId() {
+    return curTaskId
+}
+
+function setTaskId(id) {
+    curTaskId = id
+}
+
+function getTaskTitle() {
+    return curTaskTitle
+}
+
+function setTaskTitle(title) {
+    curTaskTitle = title
 }
