@@ -1,3 +1,5 @@
+// JS logic pertaining to Create Task Page
+
 // Imports
 import { Pomodoro } from "./pomodoroDao.js";
 import { savePomodoro } from "./chromeStorageAdapter.js"
@@ -11,6 +13,13 @@ const formSubmit = document.querySelector("#form-submit");
 const form = document.querySelector("#form");
 const createTaskButton = document.querySelector("#create-task");
 
+// Event Listeners
+formTitle.addEventListener("change", formState);
+formTime.addEventListener("change", formState);
+formDate.addEventListener("change", formState);
+formTag.addEventListener("change", formState);
+createTaskButton.addEventListener("click", () => form.reset())
+
 // Enable/Disable Submit Button and Set Mouse Text
 function setSubmit(enable, mouseText) {
     formSubmit.disabled = !enable;
@@ -22,13 +31,7 @@ form.reset();
 setSubmit(false, "Fill all Fields");
 const cur_date = new Date().toJSON().slice(0, 10);
 
-// Event Listeners
-createTaskButton.addEventListener("click", () => form.reset())
-formTitle.addEventListener("change", formState);
-formTime.addEventListener("change", formState);
-formDate.addEventListener("change", formState);
-formTag.addEventListener("change", formState);
-
+// Check State of the Form
 function formState() {
     // If any input is empty
     if (formTitle.value == "" || formTime.value == "" ||
@@ -40,22 +43,21 @@ function formState() {
         setSubmit(false, "Enter Valid Time");
     }
     // Validate Date
-    // else if (new Date(formDate.value) < new Date(cur_date)) {
-    //     formSubmit.disabled = true;
-    //     formSubmit.title = "Enter Valid Date"
-    // }
+    else if (formDate.value < cur_date) {
+        setSubmit(false, "Enter Valid Date");
+    }
     else {
         setSubmit(true, "Add Task");
     }
 }
 
+// Submit Button Click
 formSubmit.addEventListener("click", () => {
     if (formSubmit.disabled == false) {
         // Save Form Data
         const formData = new FormData(form);
         let pomodoro = new Pomodoro(formData.get('title'), parseInt(formData.get('time')),
                                     formData.get('date'), [formData.get('tag')], "", false);
-        console.log(pomodoro);
         savePomodoro(pomodoro);
 
         // Reset form button and exit

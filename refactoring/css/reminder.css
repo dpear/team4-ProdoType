@@ -1,3 +1,5 @@
+/* CSS Pertaining to Create Task Page */
+
 @import '../src/fonts/fonts.css';
 
 #create-task-dialogue {
@@ -24,6 +26,7 @@
     margin-top: var(--start-margin-top);
 }
 
+/* Generic Dark Red Rounded Box */
 #create-task-dialogue .bubble-box {
     display: flex;
     flex: 1;
@@ -37,7 +40,8 @@
     background-color: var(--primary-color-deep);
 }
 
-#create-task-dialogue input[type="text"] {
+/* Title Field Input */
+#create-task-dialogue #form-title {
     display: flex;
     flex: 1;
     overflow: hidden;
@@ -50,10 +54,12 @@
     padding-right: 5%;
 }
 
-#create-task-dialogue input[type="text"]::placeholder {
+/* Title Field Placeholder Text */
+#create-task-dialogue #form-title::placeholder {
     color: var(--text-color);
 }
 
+/* Div Containing 2 Bubble Boxes Horizontally */
 #create-task-dialogue #number-date-div {
     display: flex;
     flex-direction: row;
@@ -67,10 +73,12 @@
     height: 100%;
 }
 
+/* Create Margin between the 2 Bubble Boxes */
 #create-task-dialogue #number-date-div .bubble-box:first-child {
     margin-right: 1%;
 }
 
+/* Time Ion Icon */
 #create-task-dialogue #reminder-pomo-icon {
     width: 30%;
     font-size: 20px;
@@ -78,7 +86,8 @@
     object-fit: cover;
 }
 
-#create-task-dialogue input[type="number"] {
+/* Time Field Input */
+#create-task-dialogue #form-time {
     width: 40%;
     background: var(--primary-color);
     border: none;
@@ -90,16 +99,18 @@
 }
 
 /* Chrome and Edge No Arrows */
-#create-task-dialogue input[type="number"]::-webkit-outer-spin-button,
-#create-task-dialogue input[type="number"]::-webkit-inner-spin-button {
+#create-task-dialogue #form-time::-webkit-outer-spin-button,
+#create-task-dialogue #form-time::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-#create-task-dialogue input[type="number"]::placeholder {
+/* Time Field Placholder Text */
+#create-task-dialogue #form-time::placeholder {
     color: var(--text-color);
 }
 
-#create-task-dialogue input[type="date"] {
+/* Date Field Input */
+#create-task-dialogue #form-date {
     background-color: var(--primary-color-deep);
     border: none;
     color: var(--text-color);
@@ -107,13 +118,13 @@
     border-radius: var(--box-radius);
     height: 100%;
     width: 100%;
-    /* Date Picker Only */
+    /* Enable Date Picker Only */
     display: inline-block;
     position: relative;
 }
 
-/* Date Picker Only */
-#create-task-dialogue input[type="date"]::-webkit-calendar-picker-indicator {
+/* Enable Date Picker Only */
+#create-task-dialogue #form-date::-webkit-calendar-picker-indicator {
     background: transparent;
     bottom: 0;
     color: transparent;
@@ -131,7 +142,8 @@
     color: transparent;
 }
 
-#create-task-dialogue select {
+/* Tag Field Input */
+#create-task-dialogue #form-tag {
     display: flex;
     flex: 1;
     border: none;
@@ -142,7 +154,8 @@
     height: 100%;
 }
 
-#create-task-dialogue button {
+/* Submit Button */
+#create-task-dialogue #form-submit {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,24 +168,25 @@
     border: none;
 }
 
-/* Suppress Mouse-Over Text */
-#create-task-dialogue button ion-icon {
+/* Suppress Mouse-Over Text on Submit Ion Icon */
+#create-task-dialogue #form-submit ion-icon {
     pointer-events: none;
 }
 
 /* Disabled Submit Button */
-#create-task-dialogue button:disabled {
+#create-task-dialogue #form-submit:disabled {
     opacity: 0.6;
     cursor: auto;
 }
 
-/* Don't change on Hover when Disabled */
-#create-task-dialogue button:disabled:hover {
+/* Don't change Submit Button on Hover when Disabled */
+#create-task-dialogue #form-submit:disabled:hover {
     background-color: var(--primary-color-deep);
     color: var(--text-color);
 }
 
-#create-task-dialogue button:hover {
+/* Submit Button on Hover */
+#create-task-dialogue #form-submit:hover {
     color: var(--primary-color-deep);
     background-color: var(--text-color);
 }
