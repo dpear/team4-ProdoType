@@ -56,6 +56,12 @@ const renderPomoBtn = () => {
         } else if (curBtnIdx == 0) {
           showPlay(index);
           element.classList.remove(ACTIVE);
+        } else if (curBtnIdx == 2) {
+          showFinish(index);
+          element.classList.add(ACTIVE);
+        } else {
+          showPlay(index);
+        element.classList.remove(ACTIVE); //time is paused
         }
       } else {
         showPlay(index);
@@ -158,6 +164,11 @@ const renderTimer = () => {
   if (curFocustTab >= 0) {
     timeShow.forEach((element, index) => {
       if (index == curFocustTab) {
+        chrome.storage.local.get(["globalTime"], function(result){
+          console.log("Retieved from Database" + result);
+          console.log(result["globalTime"]);
+        });
+
         elementTime(element, backgroundPage.getGlobalTime());
       } else {
         elementTime(element, calculateTotalSeconds(timer[index]));
