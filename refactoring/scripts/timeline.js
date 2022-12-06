@@ -1,7 +1,6 @@
 import { initializePomo, renderTitle } from "./focus.js"
 
-const DATA = "data"
-const ACTIVEIDX = "activeIndex"
+var backgroundPage = chrome.extension.getBackgroundPage();
 
 const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     return {
@@ -28,11 +27,6 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     filter: {
       isDone: false,
     }
-  }
-
-  const loadData = (state, idx) => {
-    localStorage.setItem(DATA, JSON.stringify(state))
-    localStorage.setItem(ACTIVEIDX, idx)
   }
   
   const listenFilterBtnClicked = (state) => {
@@ -115,16 +109,19 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
       tsBtn.addEventListener('click', () => {
         let taskIdx = Number(tsBtn.getAttribute('key'))
         let taskInfo = state.items[taskIdx]
+        let taskTitle = taskInfo.title
+        let tomatoExpected = taskInfo.tomatoCount
         const tabs = document.querySelectorAll('[data-main-tab-target]')
-        localStorage.setItem(ACTIVEIDX, taskIdx)
-        renderTitle()
+        backgroundPage.setTaskId(taskIdx)
+        backgroundPage.setTaskTitle(taskTitle)
+        backgroundPage.setPomoExpected(tomatoExpected)
+        backgroundPage.setPomoCompleted(0)
         initializePomo()
         tabs[0].click()
       })
     })
   }
   
-  loadData(state, -1)
   renderList(state);
   listenFilterBtnClicked(state);
   listenCreateBtnClicked(state);

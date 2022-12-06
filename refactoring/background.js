@@ -25,6 +25,8 @@ let lastFocusTab = -1
 let lastBtnState = -1
 let curTaskId = -1
 let curTaskTitle = ""
+let curPomoExpected = -1
+let curPomoCompleted = -1
 let audioPath = "/src/sounds/car"
 let audio = null
 let curTime = "globalTime"
@@ -120,6 +122,22 @@ function getTaskTitle() {
 
 function setTaskTitle(title) {
     curTaskTitle = title
+}
+
+function getPomoExpected() {
+    return curPomoExpected
+}
+
+function setPomoExpected(num) {
+    curPomoExpected = num
+}
+
+function getPomoCompleted() {
+    return curPomoCompleted
+}
+
+function setPomoCompleted(num) {
+    curPomoCompleted = num
 }
 
 

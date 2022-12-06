@@ -5,8 +5,6 @@ var backgroundPage = chrome.extension.getBackgroundPage();
 console.log("background page is ", backgroundPage);
 
 const ACTIVE = "active";
-const DATA = "data";
-const ACTIVEIDX = "activeIndex";
 
 const focusTabs = document.querySelectorAll("[data-tab-target]");
 const focusTabContent = document.querySelectorAll("[data-tab-content]");
@@ -20,19 +18,6 @@ const pomoNumberExpected = document.getElementById("pomo-expected");
 
 const audios = [];
 
-// let handle = -1;
-// let globalTime = 0;
-let pomoAmountExpected = 8;
-let pomoCompleted = 0;
-
-var state = {
-  timerState: 0, //0 -> pause, time is runing 1 -> play time is paused
-  time: 3600,
-  focusTab: 0,
-  taskId: 0,
-  taskTitle: "",
-  expectedTomatoNumber: 0
-};
 
 //all start btns initialize to start
 const initializePomoBtn = () => {
@@ -61,7 +46,7 @@ const renderPomoBtn = () => {
           element.classList.add(ACTIVE);
         } else {
           showPlay(index);
-        element.classList.remove(ACTIVE); //time is paused
+          element.classList.remove(ACTIVE); //time is paused
         }
       } else {
         showPlay(index);
@@ -164,10 +149,10 @@ const renderTimer = () => {
   if (curFocustTab >= 0) {
     timeShow.forEach((element, index) => {
       if (index == curFocustTab) {
-        chrome.storage.local.get(["globalTime"], function(result){
-          console.log("Retieved from Database" + result);
-          console.log(result["globalTime"]);
-        });
+        // chrome.storage.local.get(["globalTime"], function(result){
+        //   console.log("Retieved from Database" + result);
+        //   console.log(result["globalTime"]);
+        // });
 
         elementTime(element, backgroundPage.getGlobalTime());
       } else {
@@ -204,12 +189,14 @@ const renderTitle = () => {
   if (taskId >= 0 ) {
     let curTaskId = backgroundPage.getTaskId();
     var taskTitle = backgroundPage.getTaskTitle();
-    var tomatoExpected = state.expectedTomatoNumber;
+    var tomatoExpected = backgroundPage.getPomoExpected();
+    var tomatoCompleted = backgroundPage.getPomoCompleted();
 
     pomoTaskTitle.innerHTML = taskTitle;
     pomoAnnotation.style.width = "85%";
     pomoAmount.style.display = "flex";
     pomoNumberExpected.innerHTML = String(tomatoExpected);
+    pomoNumberCompleted.innerHTML = String(tomatoCompleted);
   } else {
     pomoTaskTitle.innerHTML = "Let's tomato 🍅";
     pomoAnnotation.style.width = "50%";
@@ -321,6 +308,8 @@ const completedBtnListenerCreate = () => {
   pomoCompletedBtn.addEventListener("click", () => {
     backgroundPage.setTaskId(-1);
     backgroundPage.setTaskTitle("");
+    backgroundPage.setPomoExpected(0);
+    backgroundPage.setPomoCompleted(0);
     initializePomo();
   });
 };
@@ -343,14 +332,11 @@ focusTabs.forEach((tab, index) => {
 
     //manually initialize
     // clearInterval(handle);
-    backgroundPage.interrupt()
+    // backgroundPage.interrupt()
     initializePomoBtn();
     backgroundPage.setGlobalTime(calculateTotalSeconds(timer[index]));
     // globalTime = calculateTotalSeconds(timer[index]);
     elementTime(timeShow[index], calculateTotalSeconds(timer[index]));
-
-    //Option1: clearing timer when switch tab db connected
-    //1.clear timer 2.initialize a state:only time change 3.put in
   });
 });
 
@@ -365,8 +351,8 @@ startBtn.forEach((element, index) => {
       backgroundPage.setGlobalTime(calculateTotalSeconds(timer[index]));
       elementTime(timeShow[index], calculateTotalSeconds(timer[index]));
       if (element.classList.contains("focus-type")) {
-        pomoCompleted += 1;
-        pomoNumberCompleted.innerHTML = String(pomoCompleted);
+        backgroundPage.setPomoCompleted(backgroundPage.getPomoCompleted() + 1);
+        pomoNumberCompleted.innerHTML = String(backgroundPage.getPomoCompleted());
       }
     }
     element.classList.toggle(ACTIVE);
