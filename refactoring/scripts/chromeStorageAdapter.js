@@ -2,15 +2,12 @@ import { Pomodoro } from "./pomodoroDao.js";
 
 var uid = Date.now().toString();
 
-const pomo = new Pomodoro('title', 4, '2022-12-04', 'tags', 'notes', false);
-const pomo_new = new Pomodoro('title', 4, '2022-12-04', 'tags', 'notes', true);
-
-let dd = {
-    [uid] : pomo,
-    [uid+3] : pomo_new
-};
-
+/**
+ * Start of testing code
+ */
 const testing_button = document.getElementById("db-testing")
+
+const pomo = new Pomodoro('title', 4, '2022-12-04', 'tags', 'notes', false);
 
 testing_button.addEventListener("click", () => {
     // savePomodoro(pomo);
@@ -22,6 +19,11 @@ testing_button.addEventListener("click", () => {
     // getAllPomodoros();
 }
 );
+
+/**
+ * End of testing code
+ * 
+ */
 
 function getAllPomodoros() {
     chrome.storage.local.get(null, function (result) {
@@ -48,7 +50,7 @@ function getAllCompletedPomodoros() {
 }
 
 function savePomodoro(pomo) {
-    chrome.storage.local.set(dd, function () {
+    chrome.storage.local.set({[uid]:pomo}, function () {
         console.log(`Saved a new pomodoro : ${pomo} to database`);
     });
 }
