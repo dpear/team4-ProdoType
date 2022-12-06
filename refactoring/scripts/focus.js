@@ -43,29 +43,63 @@ const initializePomoBtn = () => {
   });
 };
 
-const renderPomoBtnCE = (state) => {
+const renderPomoBtn = () => {
   const startBtn = document.querySelectorAll(".start");
-  const curTimerState = state.timerState;
-  const curFocustTab = state.focusTab;
-  startBtn.forEach((element, index) => {
-    if (index == curFocustTab) {
-      if (curTimerState == 0) {
-        showPause(index); //time is running
-        element.classList.add(ACTIVE);
-      } else if (curTimerState == 1) {
+  const curBtnIdx = backgroundPage.getBtnStateIdx();
+  const curFocustTab = backgroundPage.getFocusTabIdx();
+  if (curFocustTab >=0 && curBtnIdx >= 0) {
+    startBtn.forEach((element, index) => {
+      if (index == curFocustTab) {
+        if (curBtnIdx == 1) {
+          showPause(index); //time is running
+          element.classList.add(ACTIVE);
+        } else if (curBtnIdx == 0) {
+          showPlay(index);
+          element.classList.remove(ACTIVE);
+        } else if (curBtnIdx == 2) {
+          showFinish(index);
+          element.classList.add(ACTIVE);
+        } else {
+          showPlay(index);
+        element.classList.remove(ACTIVE); //time is paused
+        }
+      } else {
         showPlay(index);
-        element.classList.remove(ACTIVE);
+        element.classList.remove(ACTIVE); //time is paused
       }
-    } else {
+    });
+  } else {
+    startBtn.forEach((element, index) => {
       showPlay(index);
-      element.classList.remove(ACTIVE); //time is paused
-    }
-  });
+      element.classList.remove(ACTIVE);
+    });
+  }
 };
+
+// const renderPomoBtnCE = (state) => {
+//   const startBtn = document.querySelectorAll(".start");
+//   const curTimerState = state.timerState;
+//   const curFocustTab = state.focusTab;
+//   startBtn.forEach((element, index) => {
+//     if (index == curFocustTab) {
+//       if (curTimerState == 0) {
+//         showPause(index); //time is running
+//         element.classList.add(ACTIVE);
+//       } else if (curTimerState == 1) {
+//         showPlay(index);
+//         element.classList.remove(ACTIVE);
+//       }
+//     } else {
+//       showPlay(index);
+//       element.classList.remove(ACTIVE); //time is paused
+//     }
+//   });
+// };
 
 //initialize to focus time tab
 const initializeFocusTab = () => {
   const focusTabs = document.querySelectorAll("[data-tab-target]");
+  backgroundPage.setFocusTabIdx(0);
   focusTabs.forEach((tab, index) => {
     tab.classList.add(ACTIVE);
     const target = document.querySelector(tab.dataset.tabTarget);
@@ -77,19 +111,45 @@ const initializeFocusTab = () => {
   });
 };
 
-const renderFocusTabCE = (state) => {
+const renderFocusTab = () => {
   const focusTabs = document.querySelectorAll("[data-tab-target]");
-  const curFocustTab = state.focusTab;
-  focusTabs.forEach((tab, index) => {
-    tab.classList.add(ACTIVE);
-    const target = document.querySelector(tab.dataset.tabTarget);
-    target.classList.add(ACTIVE);
-    if (index != curFocustTab) {
-      tab.classList.remove(ACTIVE);
-      target.classList.remove(ACTIVE);
-    }
-  });
+  const curFocustTab = backgroundPage.getFocusTabIdx();
+  if (curFocustTab >= 0) {
+    focusTabs.forEach((tab, index) => {
+      tab.classList.add(ACTIVE);
+      const target = document.querySelector(tab.dataset.tabTarget);
+      target.classList.add(ACTIVE);
+      if (index != curFocustTab) {
+        tab.classList.remove(ACTIVE);
+        target.classList.remove(ACTIVE);
+      }
+    });
+  } else {
+    focusTabs.forEach((tab, index) => {
+      tab.classList.add(ACTIVE);
+      const target = document.querySelector(tab.dataset.tabTarget);
+      target.classList.add(ACTIVE);
+      if (tab.dataset.tabTarget != "#focus-time") {
+        tab.classList.remove(ACTIVE);
+        target.classList.remove(ACTIVE);
+      }
+    });
+  }
 };
+
+// const renderFocusTabCE = (state) => {
+//   const focusTabs = document.querySelectorAll("[data-tab-target]");
+//   const curFocustTab = state.focusTab;
+//   focusTabs.forEach((tab, index) => {
+//     tab.classList.add(ACTIVE);
+//     const target = document.querySelector(tab.dataset.tabTarget);
+//     target.classList.add(ACTIVE);
+//     if (index != curFocustTab) {
+//       tab.classList.remove(ACTIVE);
+//       target.classList.remove(ACTIVE);
+//     }
+//   });
+// };
 
 const initializeTimer = () => {
   const timeShow = document.querySelectorAll(".time");
@@ -98,16 +158,39 @@ const initializeTimer = () => {
   });
 }
 
-const renderTimer = (state) => {
-  const curFocustTab = state.focusTab;
-  const curTime = state.time
+const renderTimer = () => {
   const timeShow = document.querySelectorAll(".time");
-  timeShow.forEach((element, index) => {
-    if (index == curFocustTab) {
-      elementTime(element, curTime);
-    }
-  });
+  const curFocustTab = backgroundPage.getFocusTabIdx();
+  if (curFocustTab >= 0) {
+    timeShow.forEach((element, index) => {
+      if (index == curFocustTab) {
+        chrome.storage.local.get(["globalTime"], function(result){
+          console.log("Retieved from Database" + result);
+          console.log(result["globalTime"]);
+        });
+
+        elementTime(element, backgroundPage.getGlobalTime());
+      } else {
+        elementTime(element, calculateTotalSeconds(timer[index]));
+      }
+    });
+  } else {
+    timeShow.forEach((element, index) => {
+      elementTime(element, calculateTotalSeconds(timer[index]));
+    });
+  }
 }
+
+// const renderTimer = (state) => {
+//   const curFocustTab = state.focusTab;
+//   const curTime = state.time
+//   const timeShow = document.querySelectorAll(".time");
+//   timeShow.forEach((element, index) => {
+//     if (index == curFocustTab) {
+//       elementTime(element, curTime);
+//     }
+//   });
+// }
 
 const renderTitle = () => {
   const pomoAnnotation = document.getElementById("focus-annotation");
@@ -116,18 +199,12 @@ const renderTitle = () => {
   const pomoAmount = document.getElementById("pomo-amount");
   const pomoNumberCompleted = document.getElementById("pomo-completed");
   const pomoNumberExpected = document.getElementById("pomo-expected");
+  const taskId = backgroundPage.getTaskId();
 
-  if (
-    localStorage.getItem(DATA) != null &&
-    localStorage.getItem(ACTIVEIDX) != null &&
-    localStorage.getItem(ACTIVEIDX) >= 0
-  ) {
-    let curIdx = Number.parseInt(localStorage.getItem(ACTIVEIDX));
-    let curData = localStorage.getItem("data");
-    var dataObj = JSON.parse(curData);
-    var taskItems = dataObj["items"];
-    var taskTitle = taskItems[curIdx]["title"];
-    var tomatoExpected = taskItems[curIdx]["tomatoCount"];
+  if (taskId >= 0 ) {
+    let curTaskId = backgroundPage.getTaskId();
+    var taskTitle = backgroundPage.getTaskTitle();
+    var tomatoExpected = state.expectedTomatoNumber;
 
     pomoTaskTitle.innerHTML = taskTitle;
     pomoAnnotation.style.width = "85%";
@@ -140,7 +217,40 @@ const renderTitle = () => {
     pomoNumberExpected.innerHTML = String(0);
     pomoNumberCompleted.innerHTML = String(0);
   }
-};
+}
+
+// const renderTitle = () => {
+//   const pomoAnnotation = document.getElementById("focus-annotation");
+//   const pomoTaskTitle = document.getElementById("current-task");
+//   const pomoCompletedBtn = document.getElementById("task-completed");
+//   const pomoAmount = document.getElementById("pomo-amount");
+//   const pomoNumberCompleted = document.getElementById("pomo-completed");
+//   const pomoNumberExpected = document.getElementById("pomo-expected");
+
+//   if (
+//     localStorage.getItem(DATA) != null &&
+//     localStorage.getItem(ACTIVEIDX) != null &&
+//     localStorage.getItem(ACTIVEIDX) >= 0
+//   ) {
+//     let curIdx = Number.parseInt(localStorage.getItem(ACTIVEIDX));
+//     let curData = localStorage.getItem("data");
+//     var dataObj = JSON.parse(curData);
+//     var taskItems = dataObj["items"];
+//     var taskTitle = taskItems[curIdx]["title"];
+//     var tomatoExpected = taskItems[curIdx]["tomatoCount"];
+
+//     pomoTaskTitle.innerHTML = taskTitle;
+//     pomoAnnotation.style.width = "85%";
+//     pomoAmount.style.display = "flex";
+//     pomoNumberExpected.innerHTML = String(tomatoExpected);
+//   } else {
+//     pomoTaskTitle.innerHTML = "Let's tomato 🍅";
+//     pomoAnnotation.style.width = "50%";
+//     pomoAmount.style.display = "none";
+//     pomoNumberExpected.innerHTML = String(0);
+//     pomoNumberCompleted.innerHTML = String(0);
+//   }
+// };
 
 const renderTitleFromState = (state) => {
   const pomoAnnotation = document.getElementById("focus-annotation");
@@ -186,18 +296,31 @@ timer.forEach((element) => {
   audios.push(audio);
 });
 
-const renderPomo = (state) => {
-  //clear count down
-  renderFocusTabCE(state)
-  renderPomoBtnCE(state)
-  renderTitleFromState(state)
-  render
+const renderPomo = () => {
+  if (backgroundPage.getFocusTabIdx() >= 0) {
+    renderTitle()
+    renderFocusTab()
+    renderTimer()
+    renderPomoBtn()
+  } else {
+    backgroundPage.interrupt();
+    backgroundPage.setGlobalTime(calculateTotalSeconds(timer[0]));
+    renderTitle();
+    initializeFocusTab();
+    initializeTimer();
+    initializePomoBtn();
+  }
 }
 
 const completedBtnListenerCreate = () => {
   const pomoCompletedBtn = document.getElementById("task-completed");
+  // pomoCompletedBtn.addEventListener("click", () => {
+  //   localStorage.setItem(ACTIVEIDX, -1);
+  //   initializePomo();
+  // });
   pomoCompletedBtn.addEventListener("click", () => {
-    localStorage.setItem(ACTIVEIDX, -1);
+    backgroundPage.setTaskId(-1);
+    backgroundPage.setTaskTitle("");
     initializePomo();
   });
 };
@@ -206,6 +329,7 @@ const completedBtnListenerCreate = () => {
 focusTabs.forEach((tab, index) => {
   tab.addEventListener("click", () => {
     backgroundPage.interrupt();
+    backgroundPage.setFocusTabIdx(index);
     focusTabContent.forEach((content) => {
       content.classList.remove(ACTIVE);
     });
@@ -228,31 +352,16 @@ focusTabs.forEach((tab, index) => {
     //Option1: clearing timer when switch tab db connected
     //1.clear timer 2.initialize a state:only time change 3.put in
   });
-  //The title is always there, only if that task change, we change the title
-  //Don't need to re-render every time click the tab
-
-  // if (tab.classList.contains(ACTIVE)) {
-  //   globalTime = calculateTotalSeconds(timer[index]);
-  //   console.log(tab.dataset.tabTarget);
-  //   if (tab.dataset.tabTarget == "#focus-time") {
-  //     renderTitle();
-  //   }
-  // }
 });
 
 /*
 Set Click listener for start button, the original text displayed is "Start" 
 */
 startBtn.forEach((element, index) => {
-  // element.textContent = "Start"
-  // showPlay(index);
-  // let handle
   element.addEventListener("click", () => {
     audios[index].pause();
     audios[index].currentTime = 0;
     if (backgroundPage.getGlobalTime() == 0) {
-    // if (globalTime == 0) {
-      // globalTime = calculateTotalSeconds(timer[index]);
       backgroundPage.setGlobalTime(calculateTotalSeconds(timer[index]));
       elementTime(timeShow[index], calculateTotalSeconds(timer[index]));
       if (element.classList.contains("focus-type")) {
@@ -287,19 +396,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+chrome.runtime.sendMessage({
+  msg: "popup_opened",
+});
+
+
 function showPlay(index) {
+  backgroundPage.setBtnStateIdx(0)
   playBtns[index].style.display = "block";
   pauseBtns[index].style.display = "none";
   finishBtns[index].style.display = "none";
 }
 
 function showPause(index) {
+  backgroundPage.setBtnStateIdx(1)
   playBtns[index].style.display = "none";
   pauseBtns[index].style.display = "block";
   finishBtns[index].style.display = "none";
 }
 
 function showFinish(index) {
+  backgroundPage.setBtnStateIdx(2)
   playBtns[index].style.display = "none";
   pauseBtns[index].style.display = "none";
   finishBtns[index].style.display = "block";
@@ -327,16 +444,12 @@ function showFinish(index) {
 //   return handle;
 // }
 
-const renderOption = () => {
-  //db interaction
-  //No last active:
-  initializePomo();
-  //else:
-  renderPomo(state)
-}
-
-renderTitle();
-initializePomo();
+// renderTitle();
+// initializePomo();
+renderPomo();
 completedBtnListenerCreate();
+chrome.runtime.sendMessage({
+  msg: "popup_opened"
+});
 
 export { renderTitle, initializePomo };
