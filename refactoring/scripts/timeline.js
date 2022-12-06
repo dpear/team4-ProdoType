@@ -1,6 +1,6 @@
 import { initializePomo, renderTitle } from "./focus.js"
 import { Pomodoro } from "./pomodoroDao.js";
-import { savePomodoro, getAllUpcomingPomodoros } from "./chromeStorageAdapter.js";
+import { getAllPomodoros, savePomodoro } from "./chromeStorageAdapter.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 
@@ -18,10 +18,10 @@ const loadData = () => {
   savePomodoro(pomo5);
 }
 
-// const getAllUpcoming = () => {
-//   let res = getAllUpcomingPomodorosPromise()
-//   console.log(res)
-// }
+async function getData() {
+  let receivedRes = await getAllPomodoros()
+  console.log(receivedRes)
+}
 
 const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     return {
@@ -144,7 +144,7 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
   }
   
   loadData()
-  getAllUpcomingPomodoros()
+  getData()
   renderList(state);
   listenFilterBtnClicked(state);
   listenCreateBtnClicked(state);
