@@ -1,7 +1,5 @@
 import { Pomodoro } from "./pomodoroDao.js";
 
-var uid = Date.now().toString();
-
 /**
  * Start of testing code
  */
@@ -10,9 +8,8 @@ const testing_button = document.getElementById("db-testing")
 const pomo = new Pomodoro('title', 4, '2022-12-04', 'tags', 'notes', false);
 
 testing_button.addEventListener("click", () => {
-    // savePomodoro(pomo);
-    // getAllPomodoros();
-    getAllUpcomingPomodoros();
+    getAllPomodoros();
+    // getAllUpcomingPomodoros();
     // updatePomodoro(uid, pomo_new);
     // getAllCompletedPomodoros();
     // deletePomodoro(uid);
@@ -25,66 +22,80 @@ testing_button.addEventListener("click", () => {
  *
  */
 
-function getAllPomodoros() {
-    chrome.storage.local.get(null, function (result) {
-        let allPomos = result;
-        console.log(allPomos);
-        return allPomos;
-    });
-}
-
-function getAllUpcomingPomodoros() {
-    chrome.storage.local.get(null, function (result) {
-        let upcomingPomos = Object.fromEntries(Object.entries(result).filter(([k,v]) => v.is_completed===false));
-        console.log(`got ${upcomingPomos} as upcoming pomos`);
-        return upcomingPomos;
-    });
-}
-
-async function getAllUpcoming() {
-    let res = await getAllUpcomingPomodorosPromise()
+export async function getAllPomodoros() {
+    let res = await getAllPomodorosPromise()
     var receivedRes = JSON.parse(JSON.stringify(res))
-    return receivedRes
-  }
+    return receivedRes;
+}
 
-const getAllUpcomingPomodorosPromise = async() => {
+async function getAllPomodorosPromise (){
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(null, function (result) {
             if (result == undefined) {
-                reject();
+                reject('Something went wrong with get API!!');
             } else {
-                resolve(Object.fromEntries(Object.entries(result).filter(([k,v]) => v.is_completed===false)));
+                resolve(result);
             }
         });
     })
 }
 
-function getAllCompletedPomodoros() {
-    chrome.storage.local.get(null, function (result) {
-        let completedPomos = Object.fromEntries(Object.entries(result).filter(([k,v]) => v.is_completed===true));
-        console.log(`got ${completedPomos} as completed pomos`);
-        return completedPomos;
-    });
+
+export async function getAllUpcomingPomodoros() {
+    let res = await getAllUpcomingPomodorosPromise()
+    var receivedRes = JSON.parse(JSON.stringify(res))
+    return receivedRes;
 }
+
+async function getAllUpcomingPomodorosPromise (){
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(null, function (result) {
+            if (result == undefined) {
+                reject('Something went wrong with get API!!');
+            } else {
+                resolve(Object.fromEntries(Object.entries(result).filter(([k, v]) => v.is_completed === false)));
+            }
+        });
+    })
+}
+
+
+export async function getAllCompletedPomodoros() {
+    let res = await getAllCompletedPomodorosPromise()
+    var receivedRes = JSON.parse(JSON.stringify(res))
+    return receivedRes
+}
+
+async function getAllCompletedPomodorosPromise (){
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(null, function (result) {
+            if (result == undefined) {
+                reject('SOmething went wrong with get API!!');
+            } else {
+                resolve(Object.fromEntries(Object.entries(result).filter(([k, v]) => v.is_completed === true)));
+            }
+        });
+    })
+}
+
 
 export function savePomodoro(pomo) {
-    chrome.storage.local.set({[uid]:pomo}, function () {
-        console.log(`Saved a new pomodoro : ${pomo} to database`);
+    const uid = Date.now().toString();
+    chrome.storage.local.set({ [uid]: pomo }, function () {
+        console.log(`Saved a new pomodoro : ${JSON.stringify(pomo)} to database`);
     });
 }
 
-function updatePomodoro(key, pomo_new) {
+export function updatePomodoro(key, pomo_new) {
     console.log(`updating ${key} in the chrome storage!!`);
-    chrome.storage.local.set({ [key] : pomo_new }, function () {
+    chrome.storage.local.set({ [key]: pomo_new }, function () {
         console.log("Successfully updated pomodoro!");
     });
 }
 
-function deletePomodoro(key) {
+export function deletePomodoro(key) {
     console.log(`Deleting pomodoro against key : ${key}!!`);
     chrome.storage.local.remove([key], function () {
         console.log("Deleted pomodoro from database");
     });
 }
-
-export {getAllPomodoros, getAllUpcomingPomodoros, getAllCompletedPomodoros, savePomodoro, updatePomodoro, deletePomodoro, getAllUpcomingPomodorosPromise}

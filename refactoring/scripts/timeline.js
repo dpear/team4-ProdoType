@@ -1,5 +1,6 @@
 import { initializePomo, renderTitle } from "./focus.js"
 import { Pomodoro } from "./pomodoroDao.js";
+import { savePomodoro, getAllUpcomingPomodoros } from "./chromeStorageAdapter.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 
@@ -143,7 +144,7 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
   }
   
   loadData()
-  getAllUpcoming()
+  getAllUpcomingPomodoros()
   renderList(state);
   listenFilterBtnClicked(state);
   listenCreateBtnClicked(state);
