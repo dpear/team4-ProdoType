@@ -16,7 +16,7 @@ const timer = [
   {
     id: "long_rest",
     hours: 0,
-    minutes: 5,
+    minutes: 15,
     seconds: 0,
     sound: "car3.wav",
   },
