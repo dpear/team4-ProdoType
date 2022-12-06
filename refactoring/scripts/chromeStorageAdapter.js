@@ -22,7 +22,7 @@ testing_button.addEventListener("click", () => {
 
 /**
  * End of testing code
- * 
+ *
  */
 
 function getAllPomodoros() {
@@ -49,7 +49,7 @@ function getAllCompletedPomodoros() {
     });
 }
 
-function savePomodoro(pomo) {
+export function savePomodoro(pomo) {
     chrome.storage.local.set({[uid]:pomo}, function () {
         console.log(`Saved a new pomodoro : ${pomo} to database`);
     });
