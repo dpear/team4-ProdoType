@@ -41,9 +41,27 @@ function getAllUpcomingPomodoros() {
     });
 }
 
+async function getAllUpcoming() {
+    let res = await getAllUpcomingPomodorosPromise()
+    var receivedRes = JSON.parse(JSON.stringify(res))
+    return receivedRes
+  }
+
+const getAllUpcomingPomodorosPromise = async() => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(null, function (result) {
+            if (result == undefined) {
+                reject();
+            } else {
+                resolve(Object.fromEntries(Object.entries(result).filter(([k,v]) => v.is_completed===false)));
+            }
+        });
+    })
+}
+
 function getAllCompletedPomodoros() {
     chrome.storage.local.get(null, function (result) {
-        let upcomingPomos = Object.fromEntries(Object.entries(result).filter(([k,v]) => v.is_completed===true));
+        let completedPomos = Object.fromEntries(Object.entries(result).filter(([k,v]) => v.is_completed===true));
         console.log(`got ${completedPomos} as completed pomos`);
         return completedPomos;
     });
@@ -68,3 +86,5 @@ function deletePomodoro(key) {
         console.log("Deleted pomodoro from database");
     });
 }
+
+export {getAllPomodoros, getAllUpcomingPomodoros, getAllCompletedPomodoros, savePomodoro, updatePomodoro, deletePomodoro, getAllUpcomingPomodorosPromise}

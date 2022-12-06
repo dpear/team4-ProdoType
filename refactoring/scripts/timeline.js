@@ -1,6 +1,26 @@
 import { initializePomo, renderTitle } from "./focus.js"
+import { Pomodoro } from "./pomodoroDao.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
+
+const pomo1 = new Pomodoro('title1', 1, '2022-12-04', 'tags1', 'notes', false);
+const pomo2 = new Pomodoro('title2', 2, '2022-12-04', 'tags2', 'notes', false);
+const pomo3 = new Pomodoro('title3', 3, '2022-12-04', 'tags3', 'notes', false);
+const pomo4 = new Pomodoro('title4', 4, '2022-12-04', 'tags4', 'notes', true);
+const pomo5 = new Pomodoro('title5', 5, '2022-12-04', 'tags5', 'notes', true);
+
+const loadData = () => {
+  savePomodoro(pomo1);
+  savePomodoro(pomo2);
+  savePomodoro(pomo3);
+  savePomodoro(pomo4);
+  savePomodoro(pomo5);
+}
+
+// const getAllUpcoming = () => {
+//   let res = getAllUpcomingPomodorosPromise()
+//   console.log(res)
+// }
 
 const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     return {
@@ -122,6 +142,8 @@ const newCardItem = (title, date, tag, tomatoCount, isDone) => {
     })
   }
   
+  loadData()
+  getAllUpcoming()
   renderList(state);
   listenFilterBtnClicked(state);
   listenCreateBtnClicked(state);
