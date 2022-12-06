@@ -12,7 +12,7 @@ function calculateTime(time) {
 function elementTime(element, time) {
     const { hours, minutes, seconds } = calculateTime(time)
     console.log(element)
-    console.log("entering globaltime at ", time)
+    console.log("Current globaltime is ", time)
     element.textContent = `${minutes}:${seconds}`
     if (hours) {
         element.textContent = `${hours}:` + element.textContent
@@ -27,31 +27,34 @@ let curTaskId = -1
 let curTaskTitle = ""
 let audioPath = "/src/sounds/car"
 let audio = null
+let curTime = "globalTime"
+let popupOpenMsg = "popup_opened"
 
 function start(index, element, time) {
     if (time) {
         globalTime = time
         handler = setInterval(() => {
             globalTime--
-            const item = {"globalTime": globalTime}; 
-            chrome.storage.local.set(item, () => {
-                if (chrome.runtime.lastError) {
-                    console.error(chrome.runtime.lastError.message);
-                }
-            });
+            chrome.storage.local.set({
+                [curTime]: globalTime 
+              });
             chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-                if (message.msg == "popup_opened") {
-                    var window = chrome.extension.getViews({
-                        type: "popup"
-                    });
+                if (message.msg == popupOpenMsg) {
+                    let window = chrome.extension.getViews({type: "popup"});
                     if (window.length != 0) {
                         element = window[0].document.querySelectorAll(".time")[index];
+                    }
+                    // If popup closed when timer gets 0, button won't show complete 
+                    // Thus, we need to notifyComplete again upon popup relaunch 
+                    if (globalTime == 0) {
+                        notifyComplete(index);
                     }
                 }
               });
             elementTime(element, globalTime)
             if (globalTime <= 0) {
                 clearInterval(handler)
+                lastBtnState = 2;
                 notifyComplete(index);
                 let audioIdx = index + 1
                 audio = new Audio(audioPath + audioIdx + ".wav");
@@ -61,6 +64,7 @@ function start(index, element, time) {
         }, 1000)
     } else {
         notifyComplete(index);
+        lastBtnState = 2;
         audio.play();
     }
 }
