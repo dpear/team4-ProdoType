@@ -21,8 +21,8 @@ jobs:
       #     # Specify Browser since container image is compile with Firefox
       #     browser: chrome
 
-      - name: Load CE
-        uses: Klemensas/chrome-extension-upload-action@1.x
+      - name: Chrome Extension upload & publish
+        uses: Passiverecords/chrome-extension-upload-action@1.4.1
         with:
           refresh-token: '1//06KHVH0R-6QzYCgYIARAAGAYSNwF-L9IrkaBLXFJsrHoCuGT2r6iuQj4GXwK4aDbcKWAKuZKE3_90_AKHNDYkb1SLaqhtqqY6sSE'
           client-id: '565371363750-33op6igpch0ok31ce1bsn8svukkv0dm7.apps.googleusercontent.com'
