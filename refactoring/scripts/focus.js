@@ -1,5 +1,7 @@
 import { timer } from "../src/data/db.js";
 import { calculateTotalSeconds, elementTime } from "./utility.js";
+import { updatePomodoro } from "./chromeStorageAdapter.js";
+import { getAllCompletedTasks, getAllUpcomingTasks, renderList } from "./timeline.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 console.log("background page is ", backgroundPage);
@@ -61,26 +63,6 @@ const renderPomoBtn = () => {
   }
 };
 
-// const renderPomoBtnCE = (state) => {
-//   const startBtn = document.querySelectorAll(".start");
-//   const curTimerState = state.timerState;
-//   const curFocustTab = state.focusTab;
-//   startBtn.forEach((element, index) => {
-//     if (index == curFocustTab) {
-//       if (curTimerState == 0) {
-//         showPause(index); //time is running
-//         element.classList.add(ACTIVE);
-//       } else if (curTimerState == 1) {
-//         showPlay(index);
-//         element.classList.remove(ACTIVE);
-//       }
-//     } else {
-//       showPlay(index);
-//       element.classList.remove(ACTIVE); //time is paused
-//     }
-//   });
-// };
-
 //initialize to focus time tab
 const initializeFocusTab = () => {
   const focusTabs = document.querySelectorAll("[data-tab-target]");
@@ -122,20 +104,6 @@ const renderFocusTab = () => {
   }
 };
 
-// const renderFocusTabCE = (state) => {
-//   const focusTabs = document.querySelectorAll("[data-tab-target]");
-//   const curFocustTab = state.focusTab;
-//   focusTabs.forEach((tab, index) => {
-//     tab.classList.add(ACTIVE);
-//     const target = document.querySelector(tab.dataset.tabTarget);
-//     target.classList.add(ACTIVE);
-//     if (index != curFocustTab) {
-//       tab.classList.remove(ACTIVE);
-//       target.classList.remove(ACTIVE);
-//     }
-//   });
-// };
-
 const initializeTimer = () => {
   const timeShow = document.querySelectorAll(".time");
   timeShow.forEach((element, index) => {
@@ -149,11 +117,6 @@ const renderTimer = () => {
   if (curFocustTab >= 0) {
     timeShow.forEach((element, index) => {
       if (index == curFocustTab) {
-        // chrome.storage.local.get(["globalTime"], function(result){
-        //   console.log("Retieved from Database" + result);
-        //   console.log(result["globalTime"]);
-        // });
-
         elementTime(element, backgroundPage.getGlobalTime());
       } else {
         elementTime(element, calculateTotalSeconds(timer[index]));
@@ -166,17 +129,6 @@ const renderTimer = () => {
   }
 }
 
-// const renderTimer = (state) => {
-//   const curFocustTab = state.focusTab;
-//   const curTime = state.time
-//   const timeShow = document.querySelectorAll(".time");
-//   timeShow.forEach((element, index) => {
-//     if (index == curFocustTab) {
-//       elementTime(element, curTime);
-//     }
-//   });
-// }
-
 const renderTitle = () => {
   const pomoAnnotation = document.getElementById("focus-annotation");
   const pomoTaskTitle = document.getElementById("current-task");
@@ -186,7 +138,7 @@ const renderTitle = () => {
   const pomoNumberExpected = document.getElementById("pomo-expected");
   const taskId = backgroundPage.getTaskId();
 
-  if (taskId >= 0 ) {
+  if (taskId != null ) {
     let curTaskId = backgroundPage.getTaskId();
     var taskTitle = backgroundPage.getTaskTitle();
     var tomatoExpected = backgroundPage.getPomoExpected();
@@ -197,65 +149,6 @@ const renderTitle = () => {
     pomoAmount.style.display = "flex";
     pomoNumberExpected.innerHTML = String(tomatoExpected);
     pomoNumberCompleted.innerHTML = String(tomatoCompleted);
-  } else {
-    pomoTaskTitle.innerHTML = "Let's tomato 🍅";
-    pomoAnnotation.style.width = "50%";
-    pomoAmount.style.display = "none";
-    pomoNumberExpected.innerHTML = String(0);
-    pomoNumberCompleted.innerHTML = String(0);
-  }
-}
-
-// const renderTitle = () => {
-//   const pomoAnnotation = document.getElementById("focus-annotation");
-//   const pomoTaskTitle = document.getElementById("current-task");
-//   const pomoCompletedBtn = document.getElementById("task-completed");
-//   const pomoAmount = document.getElementById("pomo-amount");
-//   const pomoNumberCompleted = document.getElementById("pomo-completed");
-//   const pomoNumberExpected = document.getElementById("pomo-expected");
-
-//   if (
-//     localStorage.getItem(DATA) != null &&
-//     localStorage.getItem(ACTIVEIDX) != null &&
-//     localStorage.getItem(ACTIVEIDX) >= 0
-//   ) {
-//     let curIdx = Number.parseInt(localStorage.getItem(ACTIVEIDX));
-//     let curData = localStorage.getItem("data");
-//     var dataObj = JSON.parse(curData);
-//     var taskItems = dataObj["items"];
-//     var taskTitle = taskItems[curIdx]["title"];
-//     var tomatoExpected = taskItems[curIdx]["tomatoCount"];
-
-//     pomoTaskTitle.innerHTML = taskTitle;
-//     pomoAnnotation.style.width = "85%";
-//     pomoAmount.style.display = "flex";
-//     pomoNumberExpected.innerHTML = String(tomatoExpected);
-//   } else {
-//     pomoTaskTitle.innerHTML = "Let's tomato 🍅";
-//     pomoAnnotation.style.width = "50%";
-//     pomoAmount.style.display = "none";
-//     pomoNumberExpected.innerHTML = String(0);
-//     pomoNumberCompleted.innerHTML = String(0);
-//   }
-// };
-
-const renderTitleFromState = (state) => {
-  const pomoAnnotation = document.getElementById("focus-annotation");
-  const pomoTaskTitle = document.getElementById("current-task");
-  const pomoCompletedBtn = document.getElementById("task-completed");
-  const pomoAmount = document.getElementById("pomo-amount");
-  const pomoNumberCompleted = document.getElementById("pomo-completed");
-  const pomoNumberExpected = document.getElementById("pomo-expected");
-
-  if (state.taskId > 0 ) {
-    let curTaskId = state.taskId;
-    var taskTitle = state.taskTitle;
-    var tomatoExpected = state.expectedTomatoNumber;
-
-    pomoTaskTitle.innerHTML = taskTitle;
-    pomoAnnotation.style.width = "85%";
-    pomoAmount.style.display = "flex";
-    pomoNumberExpected.innerHTML = String(tomatoExpected);
   } else {
     pomoTaskTitle.innerHTML = "Let's tomato 🍅";
     pomoAnnotation.style.width = "50%";
@@ -305,9 +198,21 @@ const completedBtnListenerCreate = () => {
   //   localStorage.setItem(ACTIVEIDX, -1);
   //   initializePomo();
   // });
-  pomoCompletedBtn.addEventListener("click", () => {
-    backgroundPage.setTaskId(-1);
+  pomoCompletedBtn.addEventListener("click", async() => {
+    const curTaskId = backgroundPage.getTaskId()
+    const curCompletedPomos = backgroundPage.getPomoCompleted()
+    console.log("focus complete", backgroundPage.getTaskInfo())
+    let pomo = backgroundPage.getTaskInfo()
+    pomo.time_taken = curCompletedPomos
+    pomo.is_completed = true
+    updatePomodoro(curTaskId, pomo)
+    let _0 = await getAllCompletedTasks()
+    let _1 = await getAllUpcomingTasks()
+    renderList(backgroundPage.getTaskListTab())
+
+    backgroundPage.setTaskId(null);
     backgroundPage.setTaskTitle("");
+    backgroundPage.setTaskInfo(null)
     backgroundPage.setPomoExpected(0);
     backgroundPage.setPomoCompleted(0);
     initializePomo();
@@ -407,28 +312,6 @@ function showFinish(index) {
   pauseBtns[index].style.display = "none";
   finishBtns[index].style.display = "block";
 }
-
-// /*
-// Timer logic:
-// */
-// function start(index, element, time) {
-//   let handle = null;
-//   if (time) {
-//     handle = setInterval(() => {
-//       elementTime(element, --time);
-//       --globalTime;
-//       if (time <= 0) {
-//         clearInterval(handle);
-//         showFinish(index);
-//         audios[index].play();
-//       }
-//     }, 1000);
-//   } else {
-//     showFinish(index);
-//     audios[index].play();
-//   }
-//   return handle;
-// }
 
 // renderTitle();
 // initializePomo();

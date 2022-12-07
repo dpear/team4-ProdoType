@@ -1,151 +1,185 @@
-import { initializePomo, renderTitle } from "./focus.js"
+import { initializePomo, renderTitle } from "./focus.js";
 import { Pomodoro } from "./pomodoroDao.js";
-import { getAllPomodoros, savePomodoro } from "./chromeStorageAdapter.js";
+import {
+  getAllCompletedPomodoros,
+  getAllPomodoros,
+  getAllUpcomingPomodoros,
+  savePomodoro,
+  deletePomodoro,
+} from "./chromeStorageAdapter.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 
-const pomo1 = new Pomodoro('title1', 1, '2022-12-04', 'tags1', 'notes', false);
-const pomo2 = new Pomodoro('title2', 2, '2022-12-04', 'tags2', 'notes', false);
-const pomo3 = new Pomodoro('title3', 3, '2022-12-04', 'tags3', 'notes', false);
-const pomo4 = new Pomodoro('title4', 4, '2022-12-04', 'tags4', 'notes', true);
-const pomo5 = new Pomodoro('title5', 5, '2022-12-04', 'tags5', 'notes', true);
-
 const loadData = () => {
-  savePomodoro(pomo1);
-  savePomodoro(pomo2);
-  savePomodoro(pomo3);
-  savePomodoro(pomo4);
-  savePomodoro(pomo5);
+  let random = Math.floor(Math.random() * 10);
+  let randomBool = random % 2 == 0;
+  const pomo = new Pomodoro(
+    String(backgroundPage.increaseTemp()),
+    random,
+    "2022-12-04",
+    "tags" + String(random),
+    "notes",
+    randomBool
+  );
+  savePomodoro(pomo);
+};
+
+let upcomingState = [];
+let completedState = [];
+
+async function getAllUpcomingTasks() {
+  let receivedRes = await getAllUpcomingPomodoros();
+  upcomingState = Object.entries(receivedRes);
 }
 
-async function getData() {
-  let receivedRes = await getAllPomodoros()
-  console.log(receivedRes)
+async function getAllCompletedTasks() {
+  let receivedRes = await getAllCompletedPomodoros();
+  completedState = Object.entries(receivedRes);
 }
 
-const newCardItem = (title, date, tag, tomatoCount, isDone) => {
-    return {
-      title, date, tag, tomatoCount, isDone,
-    }
-  }
-  
-  var state = {
-    items: [
-      newCardItem('Play foot ball', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Eat', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Play foot ball', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Play foot ball', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Piano', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Play foot ball', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Play foot ball', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Play foot ball', '2019-01-01', 'Sports', 1, false),
-      newCardItem('Leetcode Practice', 1, true),
-      newCardItem('Play foot balll  askjdlka ', '2019-01-01', 'Sports', 1, true),
-      newCardItem('Play foot balll laksjs sadaslk asdas askjdlka ', '2019-01-01', 'Sports', 1, true),
-      newCardItem('Play foot blk asdas askjdlka ', '2019-01-01', 'Sports', 1, true),
-      newCardItem('Play foot balll laksjd asaslk asdas askjdlka ', '2019-01-01', 'Sports', 1, true),
-    ],
-    filter: {
-      isDone: false,
-    }
-  }
-  
-  const listenFilterBtnClicked = (state) => {
-    const upcomingBtn = document.getElementById('radio-one');
-    const doneBtn = document.getElementById('radio-two');
-    upcomingBtn.addEventListener('click', () => {
-      state.filter.isDone = false;
-      renderList(state);
-      listenStartBtnClicked();
-    })
-    doneBtn.addEventListener('click', () => {
-      state.filter.isDone = true;
-      renderList(state);
-      listenStartBtnClicked();
-    })
-  }
-  
-  const listenCreateBtnClicked = (state) => {
-    const createBtn = document.getElementById('create-task');
-    const closeMask = document.getElementById('close-mask')
-    createBtn.addEventListener('click', () => {
-      // show create task modal
-      const modal = document.getElementById('create_dialog_wrapper');
-      // change css to show modal
-      modal.style.display = 'block';
-    })
-    closeMask.addEventListener('click', () => {
-      // hide create task modal
-      const modal = document.getElementById('create_dialog_wrapper');
-      // change css to hide modal
-      modal.style.display = 'none';
-    })
-  }
-  
-  
-  
-  const renderList = (state) => {
-    const listContainer = document.getElementById('time-line-list-container')
-    listContainer.innerHTML = '';
-  
-    state.items
-      .filter(item => item.isDone === state.filter.isDone)
-      .forEach((item, index) => {
-        const card = document.createElement('div')
-        card.classList.add('time-line-card')
-        card.innerHTML = `
-          <div class="time-line-card-line-1">
-            <div class="time-line-card-title">${item.title}</div>
-            <div class="time-line-card-buttons">
-              ${
-                !item.isDone ?
-                `<div key=${index} class="time-line-card-button time-line-card-button-play">
-                  <ion-icon name="play-outline"></ion-icon>
-                </div>
-                <div key=${index} class="time-line-card-button time-line-card-button-delete">
-                  <ion-icon name="trash-outline"></ion-icon>
-                </div>` : ''
-              }
-              
-            </div>
-          </div>
-          <div class="time-line-card-line-2">
-            <div class="time-line-card-info-item time-line-card-date">${item.date}</div>
-            <div class="time-line-card-info-item time-line-card-tag">${item.tag}</div>
-            <div class="time-line-card-info-item time-line-card-tomato-count">
-              <ion-icon class="alarm-icon" name="alarm"></ion-icon>
-              ×
-              ${item.tomatoCount}
-            </div>
-          </div>
-        `
-        listContainer.appendChild(card)
-      })
-  }
+const listenFilterBtnClicked = () => {
+  const upcomingBtn = document.getElementById("radio-one");
+  const doneBtn = document.getElementById("radio-two");
+  upcomingBtn.addEventListener("click", async () => {
+    backgroundPage.setTaskListTab(0);
+    renderList(0);
+    // listenStartBtnClicked();
+    // listenDeleteBtnClicked();
+  });
+  doneBtn.addEventListener("click", async () => {
+    backgroundPage.setTaskListTab(1);
+    renderList(1);
+    // listenDeleteBtnClicked();
+  });
+};
 
-  const listenStartBtnClicked = () => {
-    const taskStartBtns = document.querySelectorAll('.time-line-card-button-play')
-    console.log(taskStartBtns)
-    taskStartBtns.forEach(tsBtn => {
-      tsBtn.addEventListener('click', () => {
-        let taskIdx = Number(tsBtn.getAttribute('key'))
-        let taskInfo = state.items[taskIdx]
-        let taskTitle = taskInfo.title
-        let tomatoExpected = taskInfo.tomatoCount
-        const tabs = document.querySelectorAll('[data-main-tab-target]')
-        backgroundPage.setTaskId(taskIdx)
-        backgroundPage.setTaskTitle(taskTitle)
-        backgroundPage.setPomoExpected(tomatoExpected)
-        backgroundPage.setPomoCompleted(0)
-        initializePomo()
-        tabs[0].click()
-      })
-    })
-  }
-  
-  loadData()
-  getData()
-  renderList(state);
-  listenFilterBtnClicked(state);
-  listenCreateBtnClicked(state);
-  listenStartBtnClicked();
+const listenCreateBtnClicked = () => {
+  const createBtn = document.getElementById("create-task");
+  const closeMask = document.getElementById("close-mask");
+  createBtn.addEventListener("click", () => {
+    // show create task modal
+    const modal = document.getElementById("create_dialog_wrapper");
+    // change css to show modal
+    modal.style.display = "block";
+  });
+  closeMask.addEventListener("click", () => {
+    // hide create task modal
+    const modal = document.getElementById("create_dialog_wrapper");
+    // change css to hide modal
+    modal.style.display = "none";
+  });
+};
+
+//0 -> upcoming 1 -> completed
+const renderList = (option) => {
+  const listContainer = document.getElementById("time-line-list-container");
+  listContainer.innerHTML = "";
+
+  let state = option == 1 ? completedState : upcomingState;
+
+  state.forEach((data) => {
+    let taskId = data[0];
+    let taskInfo = data[1];
+    // console.log(taskId, taskInfo)
+    const card = document.createElement("div");
+    card.classList.add("time-line-card");
+    card.innerHTML = `
+        <div class="time-line-card-line-1">
+          <div class="time-line-card-title">${taskInfo.title}</div>
+          <div class="time-line-card-buttons">
+            ${
+              !taskInfo.is_completed
+                ? `<div key=${taskId} taskinfo=${JSON.stringify(
+                    taskInfo
+                  )} class="time-line-card-button time-line-card-button-play">
+                <ion-icon name="play-outline"></ion-icon>
+              </div>
+              <div key=${taskId} taskinfo=${JSON.stringify(
+                    taskInfo
+                  )} class="time-line-card-button time-line-card-button-delete">
+                <ion-icon name="trash-outline"></ion-icon>
+              </div>`
+                : `<div key=${taskId} taskInfo=${JSON.stringify(
+                    taskInfo
+                  )} class="time-line-card-button time-line-card-button-delete">
+                <ion-icon name="trash-outline"></ion-icon>
+              </div>`
+            }
+            
+          </div>
+        </div>
+        <div class="time-line-card-line-2">
+          <div class="time-line-card-info-item time-line-card-date">${
+            taskInfo.date_of_execution
+          }</div>
+          <div class="time-line-card-info-item time-line-card-tag">${
+            taskInfo.tags
+          }</div>
+          <div class="time-line-card-info-item time-line-card-tomato-count">
+            <ion-icon class="alarm-icon" name="alarm"></ion-icon>
+            ×
+            ${taskInfo.time_taken}
+          </div>
+        </div>
+      `;
+    listContainer.appendChild(card);
+
+    if (option == 0) {
+      listenStartBtnClicked();
+      listenDeleteBtnClicked();
+    } else if (option == 1) {
+      listenDeleteBtnClicked();
+    }
+  });
+};
+
+const listenStartBtnClicked = () => {
+  const taskStartBtns = document.querySelectorAll(
+    ".time-line-card-button-play"
+  );
+  taskStartBtns.forEach((tsBtn) => {
+    tsBtn.addEventListener("click", () => {
+      let taskId = tsBtn.getAttribute("key");
+      let taskInfo = JSON.parse(tsBtn.getAttribute("taskinfo"));
+      let taskTitle = taskInfo.title;
+      let tomatoExpected = taskInfo.time_taken;
+
+      const tabs = document.querySelectorAll("[data-main-tab-target]");
+      backgroundPage.setTaskId(taskId);
+      backgroundPage.setTaskTitle(taskTitle);
+      backgroundPage.setTaskInfo(taskInfo);
+      backgroundPage.setPomoExpected(tomatoExpected);
+      backgroundPage.setPomoCompleted(0);
+
+      console.log("task list start", backgroundPage.getTaskInfo());
+      initializePomo();
+      tabs[0].click();
+    });
+  });
+};
+
+const listenDeleteBtnClicked = () => {
+  const taskDeleteBtns = document.querySelectorAll(
+    ".time-line-card-button-delete"
+  );
+  taskDeleteBtns.forEach((tdBtn) => {
+    tdBtn.addEventListener("click", async () => {
+      let taskId = tdBtn.getAttribute("key");
+      deletePomodoro(taskId);
+      let _0 = await getAllCompletedTasks();
+      let _1 = await getAllUpcomingTasks();
+      renderList(backgroundPage.getTaskListTab());
+    });
+  });
+};
+
+loadData();
+let _0 = await getAllUpcomingTasks();
+let _1 = await getAllCompletedTasks();
+renderList(0);
+listenFilterBtnClicked();
+listenCreateBtnClicked();
+// listenStartBtnClicked();
+// listenDeleteBtnClicked();
+
+export { getAllCompletedTasks, getAllUpcomingTasks, renderList };

@@ -19,14 +19,18 @@ function elementTime(element, time) {
     }
 }
 
+let temp = 0
+
 let handler = null 
 let globalTime = null
 let lastFocusTab = -1
 let lastBtnState = -1
-let curTaskId = -1
+let curTaskId = null
 let curTaskTitle = ""
 let curPomoExpected = -1
 let curPomoCompleted = -1
+let curTaskInfo = null
+let lastTaskListTab = 0
 let audioPath = "/src/sounds/car"
 let audio = null
 let curTime = "globalTime"
@@ -138,6 +142,27 @@ function getPomoCompleted() {
 
 function setPomoCompleted(num) {
     curPomoCompleted = num
+}
+
+function getTaskInfo() {
+    return curTaskInfo
+}
+
+function setTaskInfo(obj) {
+    curTaskInfo = obj
+}
+
+function getTaskListTab() {
+    return lastTaskListTab
+}
+
+function setTaskListTab(idx) {
+    lastTaskListTab = idx
+}
+
+function increaseTemp() {
+    temp += 1
+    return temp
 }
 
 
