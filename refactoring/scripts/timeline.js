@@ -6,6 +6,7 @@ import {
   getAllUpcomingPomodoros,
   savePomodoro,
   deletePomodoro,
+  getPomodoroByTaskID
 } from "./chromeStorageAdapter.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
@@ -76,19 +77,13 @@ const renderList = (option) => {
           <div class="time-line-card-buttons">
             ${
               !taskInfo.is_completed
-                ? `<div key=${taskId} taskinfo=${JSON.stringify(
-                    taskInfo
-                  )} class="time-line-card-button time-line-card-button-play">
+                ? `<div key=${taskId} class="time-line-card-button time-line-card-button-play">
                 <ion-icon name="play-outline"></ion-icon>
               </div>
-              <div key=${taskId} taskinfo=${JSON.stringify(
-                    taskInfo
-                  )} class="time-line-card-button time-line-card-button-delete">
+              <div key=${taskId} class="time-line-card-button time-line-card-button-delete">
                 <ion-icon name="trash-outline"></ion-icon>
               </div>`
-                : `<div key=${taskId} taskInfo=${JSON.stringify(
-                    taskInfo
-                  )} class="time-line-card-button time-line-card-button-delete">
+                : `<div key=${taskId} class="time-line-card-button time-line-card-button-delete">
                 <ion-icon name="trash-outline"></ion-icon>
               </div>`
             }
@@ -125,13 +120,14 @@ const listenStartBtnClicked = () => {
     ".time-line-card-button-play"
   );
   taskStartBtns.forEach((tsBtn) => {
-    tsBtn.addEventListener("click", () => {
+    tsBtn.addEventListener("click", async () => {
       let taskId = tsBtn.getAttribute("key");
       const tabs = document.querySelectorAll("[data-main-tab-target]");
       //different task
       if (taskId != backgroundPage.getTaskId()) {
-        console.log("task info", tsBtn.getAttribute("taskinfo"))
-        let taskInfo = JSON.parse(tsBtn.getAttribute("taskinfo"));
+        let getTaskInfo = await getPomodoroByTaskID(taskId)
+        let data = Object.entries(getTaskInfo);
+        let taskInfo = data[0][1]
         let taskTitle = taskInfo.title;
         let tomatoExpected = taskInfo.time_taken;
   
