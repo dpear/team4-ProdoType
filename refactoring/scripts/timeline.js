@@ -30,13 +30,10 @@ const listenFilterBtnClicked = () => {
   upcomingBtn.addEventListener("click", async () => {
     backgroundPage.setTaskListTab(0);
     renderList(0);
-    // listenStartBtnClicked();
-    // listenDeleteBtnClicked();
   });
   doneBtn.addEventListener("click", async () => {
     backgroundPage.setTaskListTab(1);
     renderList(1);
-    // listenDeleteBtnClicked();
   });
 };
 
@@ -175,7 +172,5 @@ let _1 = await getAllCompletedTasks();
 renderList(0);
 listenFilterBtnClicked();
 listenCreateBtnClicked();
-// listenStartBtnClicked();
-// listenDeleteBtnClicked();
 
 export { getAllCompletedTasks, getAllUpcomingTasks, renderList };
