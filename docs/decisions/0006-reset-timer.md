@@ -5,7 +5,7 @@
 
 ## Context and Problem Statement
 
-Initially prof & we  expressed concern about lack of reset button
+Initially prof & we expressed concern about lack of reset button.
 
 ## Considered Options
 

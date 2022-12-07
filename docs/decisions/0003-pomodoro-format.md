@@ -5,7 +5,7 @@
 
 ## Context and Problem Statement
 
-What format should our app be?
+What format should our app be? There are extensive API's that can help us develop a chrome extensions
 
 ## Considered Options
 
