@@ -2,8 +2,8 @@ const timer = [
   {
     id: "focus_time",
     hours: 0,
-    minutes: 0,
-    seconds: 5,
+    minutes: 25,
+    seconds: 0,
     sound: "car1.wav",
   },
   {

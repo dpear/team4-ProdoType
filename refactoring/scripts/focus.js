@@ -200,15 +200,17 @@ const completedBtnListenerCreate = () => {
   // });
   pomoCompletedBtn.addEventListener("click", async() => {
     const curTaskId = backgroundPage.getTaskId()
-    const curCompletedPomos = backgroundPage.getPomoCompleted()
-    console.log("focus complete", backgroundPage.getTaskInfo())
-    let pomo = backgroundPage.getTaskInfo()
-    pomo.time_taken = curCompletedPomos
-    pomo.is_completed = true
-    updatePomodoro(curTaskId, pomo)
-    let _0 = await getAllCompletedTasks()
-    let _1 = await getAllUpcomingTasks()
-    renderList(backgroundPage.getTaskListTab())
+    if (curTaskId != null) {
+      const curCompletedPomos = backgroundPage.getPomoCompleted()
+      console.log("focus complete", backgroundPage.getTaskInfo())
+      let pomo = backgroundPage.getTaskInfo()
+      pomo.time_taken = curCompletedPomos
+      pomo.is_completed = true
+      updatePomodoro(curTaskId, pomo)
+      let _0 = await getAllCompletedTasks()
+      let _1 = await getAllUpcomingTasks()
+      renderList(backgroundPage.getTaskListTab())
+    }
 
     backgroundPage.setTaskId(null);
     backgroundPage.setTaskTitle("");
