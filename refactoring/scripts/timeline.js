@@ -10,20 +10,6 @@ import {
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 
-const loadData = () => {
-  let random = Math.floor(Math.random() * 10);
-  let randomBool = random % 2 == 0;
-  const pomo = new Pomodoro(
-    String(backgroundPage.increaseTemp()),
-    random,
-    "2022-12-04",
-    "tags" + String(random),
-    "notes",
-    randomBool
-  );
-  savePomodoro(pomo);
-};
-
 let upcomingState = [];
 let completedState = [];
 
@@ -76,6 +62,7 @@ const renderList = (option) => {
   listContainer.innerHTML = "";
 
   let state = option == 1 ? completedState : upcomingState;
+  console.log(state)
 
   state.forEach((data) => {
     let taskId = data[0];
@@ -140,18 +127,21 @@ const listenStartBtnClicked = () => {
   taskStartBtns.forEach((tsBtn) => {
     tsBtn.addEventListener("click", () => {
       let taskId = tsBtn.getAttribute("key");
-      let taskInfo = JSON.parse(tsBtn.getAttribute("taskinfo"));
-      let taskTitle = taskInfo.title;
-      let tomatoExpected = taskInfo.time_taken;
-
       const tabs = document.querySelectorAll("[data-main-tab-target]");
-      backgroundPage.setTaskId(taskId);
-      backgroundPage.setTaskTitle(taskTitle);
-      backgroundPage.setTaskInfo(taskInfo);
-      backgroundPage.setPomoExpected(tomatoExpected);
-      backgroundPage.setPomoCompleted(0);
+      //different task
+      if (taskId != backgroundPage.getTaskId()) {
+        console.log("task info", tsBtn.getAttribute("taskinfo"))
+        let taskInfo = JSON.parse(tsBtn.getAttribute("taskinfo"));
+        let taskTitle = taskInfo.title;
+        let tomatoExpected = taskInfo.time_taken;
+  
+        backgroundPage.setTaskId(taskId);
+        backgroundPage.setTaskTitle(taskTitle);
+        backgroundPage.setTaskInfo(taskInfo);
+        backgroundPage.setPomoExpected(tomatoExpected);
+        backgroundPage.setPomoCompleted(0); 
+      }
 
-      console.log("task list start", backgroundPage.getTaskInfo());
       initializePomo();
       tabs[0].click();
     });
@@ -165,6 +155,16 @@ const listenDeleteBtnClicked = () => {
   taskDeleteBtns.forEach((tdBtn) => {
     tdBtn.addEventListener("click", async () => {
       let taskId = tdBtn.getAttribute("key");
+      //current focusing task
+      if (taskId == backgroundPage.getTaskId()) {
+        //clear all info
+        backgroundPage.setTaskId(null);
+        backgroundPage.setTaskTitle("");
+        backgroundPage.setTaskInfo(null)
+        backgroundPage.setPomoExpected(0);
+        backgroundPage.setPomoCompleted(0);
+        initializePomo();
+      }
       deletePomodoro(taskId);
       let _0 = await getAllCompletedTasks();
       let _1 = await getAllUpcomingTasks();

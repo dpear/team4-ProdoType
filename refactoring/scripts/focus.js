@@ -204,7 +204,7 @@ const completedBtnListenerCreate = () => {
       const curCompletedPomos = backgroundPage.getPomoCompleted()
       console.log("focus complete", backgroundPage.getTaskInfo())
       let pomo = backgroundPage.getTaskInfo()
-      pomo.time_taken = curCompletedPomos
+      pomo.time_taken = curCompletedPomos < 1 ? 1 :curCompletedPomos
       pomo.is_completed = true
       updatePomodoro(curTaskId, pomo)
       let _0 = await getAllCompletedTasks()

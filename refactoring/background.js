@@ -19,8 +19,6 @@ function elementTime(element, time) {
     }
 }
 
-let temp = 0
-
 let handler = null 
 let globalTime = null
 let lastFocusTab = -1
@@ -159,12 +157,6 @@ function getTaskListTab() {
 function setTaskListTab(idx) {
     lastTaskListTab = idx
 }
-
-function increaseTemp() {
-    temp += 1
-    return temp
-}
-
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {

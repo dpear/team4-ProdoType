@@ -72,7 +72,7 @@ async function onSubmit() {
     if (formSubmit.disabled == false) {
         // Save Form Data
         const formData = new FormData(form);
-        let pomodoro = new Pomodoro(formData.get('title'), parseInt(formData.get('time')),
+        let pomodoro = new Pomodoro(formData.get('title').trim(), parseInt(formData.get('time')),
                                     formData.get('date'), [formData.get('tag')], "", false);
         savePomodoro(pomodoro);
         let _ = await getAllUpcomingTasks()

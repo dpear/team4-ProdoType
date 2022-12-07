@@ -22,6 +22,24 @@ import { Pomodoro } from "./pomodoroDao.js";
 //  *
 //  */
 
+export async function getPomodoroByTaskID(id) {
+    let res = await getPomodoroByIDPromise(id)
+    var receivedRes = JSON.parse(JSON.stringify(res))
+    return receivedRes;
+}
+
+async function getPomodoroByIDPromise(id) {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get([id], function (result) {
+            if (result == undefined) {
+                reject('Something went wrong with get API!!');
+            } else {
+                resolve(result);
+            }
+        });
+    })
+}
+
 
 export async function getAllPomodoros() {
     let res = await getAllPomodorosPromise()
