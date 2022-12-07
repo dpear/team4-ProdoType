@@ -173,7 +173,7 @@ const listenDeleteBtnClicked = () => {
   });
 };
 
-loadData();
+// loadData();
 let _0 = await getAllUpcomingTasks();
 let _1 = await getAllCompletedTasks();
 renderList(0);
