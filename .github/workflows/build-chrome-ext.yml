@@ -1,0 +1,34 @@
+name: Load Chrome Extension
+
+on: [push]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    #container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: refactor-dev-cicd
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v4 # use the explicit version number
+      #   with:
+      #     #build: npm run build
+      #     start: npm start
+      #     # Specify Browser since container image is compile with Firefox
+      #     browser: chrome
+
+      - name: Load CE
+        uses: Klemensas/chrome-extension-upload-action@1.4.1
+        with:
+          refresh-token: '1//06KHVH0R-6QzYCgYIARAAGAYSNwF-L9IrkaBLXFJsrHoCuGT2r6iuQj4GXwK4aDbcKWAKuZKE3_90_AKHNDYkb1SLaqhtqqY6sSE'
+          client-id: '565371363750-33op6igpch0ok31ce1bsn8svukkv0dm7.apps.googleusercontent.com'
+          client-secret: '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'
+          file-name: './extension.zip'
+          app-id: 'chrome-webstore-upload-370917'
+          publish: true
+
+#4/0AfgeXvtHFuVzclCOJU26VMGxsCkxcw0vtr5TNWYOFDf50a3Gion8R9g8Ggz0viwH7fTZ-Q
