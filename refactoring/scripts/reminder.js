@@ -27,6 +27,12 @@ formTag.addEventListener("change", formState);
 formSubmit.addEventListener("click", onSubmit);
 createTaskButton.addEventListener("click", () => form.reset())
 
+// Disable Keyboard Input to Date Element
+formDate.addEventListener("keydown", event => {
+    event.preventDefault();
+    return false
+});
+
 // Reset Form on Startup
 setSubmit(false, "Fill all Fields");
 const cur_date = new Date().toJSON().slice(0, 10);
@@ -59,7 +65,7 @@ function formState() {
     else if (formDate.value < cur_date) {
         setSubmit(false, "Enter Valid Date");
     }
-    // Validate Title length 
+    // Validate Title length
     else if (formTitle.value.length > 25) {
         setSubmit(false, "Enter title less than 25 characters");
     }
