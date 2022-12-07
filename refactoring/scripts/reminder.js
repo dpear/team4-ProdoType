@@ -53,11 +53,15 @@ function formState() {
     }
     // Validate amount of time
     else if (formTime.value < 1 || formTime.value > 8) {
-        setSubmit(false, "Enter Valid Time");
+        setSubmit(false, "Enter Valid Pomodoro Number between 1 and 8");
     }
     // Validate Date
     else if (formDate.value < cur_date) {
         setSubmit(false, "Enter Valid Date");
+    }
+    // Validate Title length 
+    else if (formTitle.value.length > 25) {
+        setSubmit(false, "Enter title less than 25 characters");
     }
     else {
         setSubmit(true, "Add Task");
