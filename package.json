@@ -18,5 +18,9 @@
   "homepage": "https://github.com/dpear/team4-ProdoType#readme",
   "devDependencies": {
     "cypress": "^11.2.0"
+  },
+  "dependencies": {
+    "mocha": "^10.1.0",
+    "puppeteer": "^19.4.0"
   }
 }
