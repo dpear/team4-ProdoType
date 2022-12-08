@@ -36,6 +36,7 @@ const extensionName = 'Focus Screen Chrome Extension Development';
   const pathToExtension = require('path').join(__dirname, 'refactoring');
   const browser = await puppeteer.launch({
     headless: false,
+    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     args: [
       `--disable-extensions-except=${pathToExtension}`,
       `--load-extension=${pathToExtension}`,
@@ -64,7 +65,25 @@ const extensionName = 'Focus Screen Chrome Extension Development';
   await extensionPage.goto(`chrome-extension://${extensionID}/${extensionPopupHtml}`);
 
   // TODO: Use extensionPage to access DOM and write UI Tests HERE
+  const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
+  await element.click(); 
+
+  describe('Home Page', async function() {
+    it('Greet Message', async function() {
+        const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
+        await element.click(); 
+        
+        //   const inputElement = await extensionPage.$('[data-test-input]');
+    //   assert.ok(inputElement, 'Input is not rendered');
   
+    //   await extensionPage.type('[data-test-input]', 'Gokul Kathirvel');
+    //   await extensionPage.click('[data-test-greet-button]');
+  
+    //   const greetMessage  = await extensionPage.$eval('#greetMsg', element => element.textContent)
+    //   assert.equal(greetMessage, 'Hello, Gokul Kathirvel!', 'Greeting message is not shown');
+    })
+  });
+
 //   await extensionPage.click('#timeline')
   // Test the background page as you would any other page.
 //   await browser.close();

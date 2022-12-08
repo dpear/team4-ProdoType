@@ -4,7 +4,7 @@
   "description": "Project team 4 for CSE 210, fall 2022. Daniela Perry, Qiwen Zhao, Satvik Gupta, Dev Gulati, Shicheng Bei, Teja Dhondu, Xiang Lu. Project repo for ProdoType, a social pomodoro timer app. We present ProdoType, an app for tracking and sharing your productivity throughout the day.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/dpear/team4-ProdoType#readme",
   "devDependencies": {
-    "cypress": "^11.2.0"
+    "cypress": "^11.2.0",
+    "mocha": "^10.1.0"
   },
   "dependencies": {
-    "mocha": "^10.1.0",
     "puppeteer": "^19.4.0"
   }
 }
