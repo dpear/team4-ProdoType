@@ -32,6 +32,34 @@
 const puppeteer = require('puppeteer');
 const extensionName = 'Focus Screen Chrome Extension Development';
 
+describe('Extension UI Testing', function() {
+    this.timeout(20000); // default is 2 seconds and that may not be enough to boot browsers and pages.
+    before(async function() {
+      await boot();
+    });
+  
+    describe('Home Page', async function() {
+      it('Greet Message', async function() {
+        
+        const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
+        await element.click(); 
+
+        // const inputElement = await extensionPage.$('[data-test-input]');
+        // assert.ok(inputElement, 'Input is not rendered');
+  
+        // await extensionPage.type('[data-test-input]', 'Gokul Kathirvel');
+        // await extensionPage.click('[data-test-greet-button]');
+  
+        // const greetMessage  = await extensionPage.$eval('#greetMsg', element => element.textContent)
+        // assert.equal(greetMessage, 'Hello, Gokul Kathirvel!', 'Greeting message is not shown');
+      })
+    });
+  
+    after(async function() {
+      await browser.close();
+    });
+});
+
 (async () => {
   const pathToExtension = require('path').join(__dirname, 'refactoring');
   const browser = await puppeteer.launch({
@@ -68,20 +96,20 @@ const extensionName = 'Focus Screen Chrome Extension Development';
   const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
   await element.click(); 
 
-  describe('Home Page', async function() {
-    it('Greet Message', async function() {
-        const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
-        await element.click(); 
+//   describe('Home Page', async function() {
+//     it('Greet Message', async function() {
+//         const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
+//         await element.click(); 
         
-        //   const inputElement = await extensionPage.$('[data-test-input]');
-    //   assert.ok(inputElement, 'Input is not rendered');
+//         //   const inputElement = await extensionPage.$('[data-test-input]');
+//     //   assert.ok(inputElement, 'Input is not rendered');
   
-    //   await extensionPage.type('[data-test-input]', 'Gokul Kathirvel');
-    //   await extensionPage.click('[data-test-greet-button]');
+//     //   await extensionPage.type('[data-test-input]', 'Gokul Kathirvel');
+//     //   await extensionPage.click('[data-test-greet-button]');
   
-    //   const greetMessage  = await extensionPage.$eval('#greetMsg', element => element.textContent)
-    //   assert.equal(greetMessage, 'Hello, Gokul Kathirvel!', 'Greeting message is not shown');
-    })
+//     //   const greetMessage  = await extensionPage.$eval('#greetMsg', element => element.textContent)
+//     //   assert.equal(greetMessage, 'Hello, Gokul Kathirvel!', 'Greeting message is not shown');
+//     })
   });
 
 //   await extensionPage.click('#timeline')
