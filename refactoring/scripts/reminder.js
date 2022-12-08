@@ -27,9 +27,17 @@ formTag.addEventListener("change", formState);
 formSubmit.addEventListener("click", onSubmit);
 createTaskButton.addEventListener("click", () => form.reset())
 
+// Disable Keyboard Input to Date Element
+formDate.addEventListener("keydown", event => {
+    event.preventDefault();
+    return false
+});
+
 // Reset Form on Startup
 setSubmit(false, "Fill all Fields");
-const cur_date = new Date().toJSON().slice(0, 10);
+const today = new Date();
+const padDate = s => (s.length == 1) ? '0' + s : s
+let cur_date = String(today.getFullYear()) + '-' + padDate(String(today.getMonth() + 1)) + '-' + padDate(String(today.getDate()))
 
 /**
  * Enable/Disable Submit Button and Set Mouse Text
@@ -59,13 +67,14 @@ function formState() {
     else if (formDate.value < cur_date) {
         setSubmit(false, "Enter Valid Date");
     }
-    // Validate Title length 
+    // Validate Title length
     else if (formTitle.value.length > 25) {
         setSubmit(false, "Enter title less than 25 characters");
     }
     else {
         setSubmit(true, "Add Task");
     }
+    console.log(formDate.value, cur_date)
 }
 
 /**

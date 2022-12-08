@@ -83,7 +83,7 @@
     width: 30%;
     font-size: 20px;
     color: var(--text-color);
-    object-fit: cover;
+    pointer-events: none;
 }
 
 /* Time Field Input */
@@ -138,7 +138,8 @@
 }
 
 /* No Placeholder on Click */
-#create-task-dialogue input:focus::placeholder {
+#create-task-dialogue #form-title:focus::placeholder,
+#create-task-dialogue #form-time:focus::placeholder {
     color: transparent;
 }
 
@@ -152,6 +153,7 @@
     text-align: center;
     border-radius: var(--box-radius);
     height: 100%;
+    cursor: pointer;
 }
 
 /* Submit Button */
