@@ -31,15 +31,18 @@
 
 const puppeteer = require('puppeteer');
 const extensionName = 'Focus Screen Chrome Extension Development';
+const extensionPath = 'src';
+let extensionPage = null;
+let browser = null;
 
 describe('Extension UI Testing', function() {
-    this.timeout(20000); // default is 2 seconds and that may not be enough to boot browsers and pages.
+    this.timeout(50000); // default is 2 seconds and that may not be enough to boot browsers and pages.
     before(async function() {
       await boot();
     });
   
     describe('Home Page', async function() {
-      it('Greet Message', async function() {
+      it('Test Case #1', async function() {
         
         const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
         await element.click(); 
@@ -60,59 +63,82 @@ describe('Extension UI Testing', function() {
     });
 });
 
-(async () => {
-  const pathToExtension = require('path').join(__dirname, 'refactoring');
-  const browser = await puppeteer.launch({
-    headless: false,
-    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    args: [
-      `--disable-extensions-except=${pathToExtension}`,
-      `--load-extension=${pathToExtension}`,
-    ],
-  });
-  const backgroundPageTarget = await browser.waitForTarget(
-    target => target.type() === 'background_page'
-  );
-  const backgroundPage = await backgroundPageTarget.page();
+async function boot() {
+    const pathToExtension = require('path').join(__dirname, 'refactoring');
+    browser = await puppeteer.launch({
+        headless: false,
+        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        args: [
+        `--disable-extensions-except=${pathToExtension}`,
+        `--load-extension=${pathToExtension}`,
+        ],
+    });
 
-//   const targets = await browser.targets();
-//   console.log(targets)
-//   const extensionTarget = targets.find(({ _targetInfo }));
-//   print(_targetInfo.extensionName);
-//   => {
-//     return _targetInfo.name === extensionName && _targetInfo.type === 'background_page';
-//   });
     
-  const targets = await browser.targets();
-  extensionTarget = targets.find(target => target.url().includes('chrome-extension'));
-  const partialExtensionUrl = extensionTarget.url() || '';
-  const [, , extensionID] = partialExtensionUrl.split('/');
+    const targets = await browser.targets();
+    extensionTarget = targets.find(target => target.url().includes('chrome-extension'));
+    const partialExtensionUrl = extensionTarget.url() || '';
+    const [, , extensionID] = partialExtensionUrl.split('/');
 
-  const extensionPopupHtml = 'index.html'
-  const extensionPage = await browser.newPage();
-  await extensionPage.goto(`chrome-extension://${extensionID}/${extensionPopupHtml}`);
+    const extensionPopupHtml = 'index.html'
+    const extensionPage = await browser.newPage();
+    await extensionPage.goto(`chrome-extension://${extensionID}/${extensionPopupHtml}`);
+  
+  }
 
-  // TODO: Use extensionPage to access DOM and write UI Tests HERE
-  const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
-  await element.click(); 
+// (async () => {
+//   const pathToExtension = require('path').join(__dirname, 'refactoring');
+//   const browser = await puppeteer.launch({
+//     headless: false,
+//     executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+//     args: [
+//       `--disable-extensions-except=${pathToExtension}`,
+//       `--load-extension=${pathToExtension}`,
+//     ],
+//   });
+//   const backgroundPageTarget = await browser.waitForTarget(
+//     target => target.type() === 'background_page'
+//   );
+//   const backgroundPage = await backgroundPageTarget.page();
 
-//   describe('Home Page', async function() {
-//     it('Greet Message', async function() {
-//         const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
-//         await element.click(); 
+// //   const targets = await browser.targets();
+// //   console.log(targets)
+// //   const extensionTarget = targets.find(({ _targetInfo }));
+// //   print(_targetInfo.extensionName);
+// //   => {
+// //     return _targetInfo.name === extensionName && _targetInfo.type === 'background_page';
+// //   });
+    
+//   const targets = await browser.targets();
+//   extensionTarget = targets.find(target => target.url().includes('chrome-extension'));
+//   const partialExtensionUrl = extensionTarget.url() || '';
+//   const [, , extensionID] = partialExtensionUrl.split('/');
+
+//   const extensionPopupHtml = 'index.html'
+//   const extensionPage = await browser.newPage();
+//   await extensionPage.goto(`chrome-extension://${extensionID}/${extensionPopupHtml}`);
+
+//   // TODO: Use extensionPage to access DOM and write UI Tests HERE
+//   const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
+//   await element.click(); 
+
+// //   describe('Home Page', async function() {
+// //     it('Greet Message', async function() {
+// //         const element = await extensionPage.waitForSelector('#focus-header > span:nth-child(2)');
+// //         await element.click(); 
         
-//         //   const inputElement = await extensionPage.$('[data-test-input]');
-//     //   assert.ok(inputElement, 'Input is not rendered');
+// //         //   const inputElement = await extensionPage.$('[data-test-input]');
+// //     //   assert.ok(inputElement, 'Input is not rendered');
   
-//     //   await extensionPage.type('[data-test-input]', 'Gokul Kathirvel');
-//     //   await extensionPage.click('[data-test-greet-button]');
+// //     //   await extensionPage.type('[data-test-input]', 'Gokul Kathirvel');
+// //     //   await extensionPage.click('[data-test-greet-button]');
   
-//     //   const greetMessage  = await extensionPage.$eval('#greetMsg', element => element.textContent)
-//     //   assert.equal(greetMessage, 'Hello, Gokul Kathirvel!', 'Greeting message is not shown');
-//     })
-  });
+// //     //   const greetMessage  = await extensionPage.$eval('#greetMsg', element => element.textContent)
+// //     //   assert.equal(greetMessage, 'Hello, Gokul Kathirvel!', 'Greeting message is not shown');
+// //     })
+// //   });
 
-//   await extensionPage.click('#timeline')
-  // Test the background page as you would any other page.
-//   await browser.close();
-})();
+// //   await extensionPage.click('#timeline')
+//   // Test the background page as you would any other page.
+// //   await browser.close();
+// })();
