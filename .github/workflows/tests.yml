@@ -17,5 +17,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+
       - name: Run tests
+        before_script: chmod 0777 ./node_modules/.bin/mocha
         run: npm test
