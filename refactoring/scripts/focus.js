@@ -31,7 +31,7 @@ async function updateTimerConfig() {
   let focusTime = await getTimeConfig("focus")
   let shortBreakTime = await getTimeConfig("sbreak")
   let longBreakTime = await getTimeConfig("lbreak")
-  if (focusTime != null || shortBreakTime != null || longBreakTime !=null) {
+  if (focusTime.focus != undefined || shortBreakTime.sbreak != undefined  || longBreakTime.lbreak != undefined ) {
     timer[0].minutes = focusTime.focus;
     timer[1].minutes = shortBreakTime.sbreak;
     timer[2].minutes = longBreakTime.lbreak;
