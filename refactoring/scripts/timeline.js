@@ -11,7 +11,7 @@ let upcomingState = [];
 let completedState = [];
 
 async function getAllUpcomingTasks() {
-  let receivedRes = await getAllUpcomingPomodoros();
+  let receivedRes = await dbAdapter.getAllUpcomingPomodoros();
   upcomingState = Object.entries(receivedRes);
 }
 
