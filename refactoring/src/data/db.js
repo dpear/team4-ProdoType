@@ -1,4 +1,4 @@
-const timer = [
+let timer = [
   {
     id: "focus_time",
     hours: 0,

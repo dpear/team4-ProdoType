@@ -52,7 +52,7 @@ function formState() {
         setSubmit(false, "Fill all Fields");
     }
     // Validate amount of time
-    else if (formTime.value < 1 || formTime.value > 8) {
+    else if (parseInt(formTime.value) < 1 || parseInt(formTime.value) > 8) {
         setSubmit(false, "Enter Valid Pomodoro Number between 1 and 8");
     }
     // Validate Date

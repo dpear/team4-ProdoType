@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/focus.css" />
     <link rel="stylesheet" href="css/timeline.css" />
     <link rel="stylesheet" href="css/reminder.css" />
+    <link rel="stylesheet" href="css/setting.css" /> 
     <script type="module" src="ionicons/ionicons.esm.js"></script>
     <script nomodule src="ionicons/ionicons.js"></script>
     <script type="module" src="scripts/focus.js" ></script>
@@ -16,6 +17,7 @@
     <script type="module" src="scripts/timeline.js" ></script>
     <script type="module" src="scripts/reminder.js" ></script>
     <script type="module" src="scripts/chromeStorageAdapter.js"></script>
+    <script type="module" src="scripts/setting.js"></script>
 </head>
 <body>
     <div class="container">
@@ -156,8 +158,31 @@
             </div>
         </div>
         <div id="setting" class="page close" data-main-tab-content>
-          <button class="db-testing-class" id="db-testing" type="button">fetch from DB</button>
-          <!-- <span>setting</span> -->
+          <div class="config">
+            <div id="setting-header">
+              <span>Pomodoro Configuration</span>
+            </div>
+            <form id="config-form">
+              <div class="config-type">
+                <span class="config-type-name">Focus Time:</span>
+                <input type="number" class="config-time" id="config-focus" name="time" min="0" max="60" placeholder="Max 60" required/>
+                <span class="config-time-unit">mins</span>
+              </div>
+              <div class="config-type">
+                <span class="config-type-name">Short Break: </span>
+                <input type="number" class="config-time" id="config-short-break" name="time" min="0" max="60" placeholder="Max 60" required/>
+                <span class="config-time-unit">mins</span>
+              </div>
+              <div class="config-type">
+                <span class="config-type-name">Long Break: </span>
+                <input type="number" class="config-time" id="config-long-break" name="time" min="0" max="60" placeholder="Max 60" required/>
+                <span class="config-time-unit">mins</span>
+              </div>
+              <button id="config-submit" type="button">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+              </button>
+            </form>
+          </div>
         </div>
         <div id="nav">
             <ul>

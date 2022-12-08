@@ -28,6 +28,11 @@ export async function getPomodoroByTaskID(id) {
     return receivedRes;
 }
 
+export async function getTimeConfig(key) {
+    let res = await getPomodoroByIDPromise(key)
+    return res
+}
+
 async function getPomodoroByIDPromise(id) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get([id], function (result) {
@@ -103,6 +108,14 @@ export function savePomodoro(pomo) {
     chrome.storage.local.set({ [uid]: pomo }, function () {
         console.log(`Saved a new pomodoro : ${JSON.stringify(pomo)} to database`);
     });
+}
+
+export async function saveTimeConfig(key, val) {
+    return new Promise((resolve, reject) => { 
+        chrome.storage.local.set({ [key]: val }, function () {
+            resolve(console.log(`Saved ${key} Config : ${val} to database`));
+        });
+    })
 }
 
 export function updatePomodoro(key, pomo_new) {

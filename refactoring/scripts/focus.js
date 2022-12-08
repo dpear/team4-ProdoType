@@ -1,7 +1,44 @@
-import { timer } from "../src/data/db.js";
+// import { timer } from "../src/data/db.js";
+let timer = [
+  {
+    id: "focus_time",
+    hours: 0,
+    minutes: 25,
+    seconds: 0,
+    sound: "car1.wav",
+  },
+  {
+    id: "short_break",
+    hours: 0,
+    minutes: 5,
+    seconds: 0,
+    sound: "car2.wav",
+  },
+  {
+    id: "long_rest",
+    hours: 0,
+    minutes: 15,
+    seconds: 0,
+    sound: "car3.wav",
+  },
+]
+
 import { calculateTotalSeconds, elementTime } from "./utility.js";
-import { updatePomodoro } from "./chromeStorageAdapter.js";
+import { updatePomodoro, getTimeConfig } from "./chromeStorageAdapter.js";
 import { getAllCompletedTasks, getAllUpcomingTasks, renderList } from "./timeline.js";
+
+async function updateTimerConfig() {
+  let focusTime = await getTimeConfig("focus")
+  let shortBreakTime = await getTimeConfig("sbreak")
+  let longBreakTime = await getTimeConfig("lbreak")
+  if (focusTime != null || shortBreakTime != null || longBreakTime !=null) {
+    timer[0].minutes = focusTime.focus;
+    timer[1].minutes = shortBreakTime.sbreak;
+    timer[2].minutes = longBreakTime.lbreak;
+  }
+}
+
+await updateTimerConfig()
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 console.log("background page is ", backgroundPage);
@@ -112,6 +149,7 @@ const initializeTimer = () => {
 }
 
 const renderTimer = () => {
+  console.log(timer)
   const timeShow = document.querySelectorAll(".time");
   const curFocustTab = backgroundPage.getFocusTabIdx();
   if (curFocustTab >= 0) {
@@ -323,4 +361,4 @@ chrome.runtime.sendMessage({
   msg: "popup_opened"
 });
 
-export { renderTitle, initializePomo };
+export { renderTitle, initializePomo, renderPomo, updateTimerConfig };
