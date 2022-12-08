@@ -9,9 +9,9 @@ const configShortBreak = document.getElementById("config-short-break");
 const configLongBreak = document.getElementById("config-long-break");
 const configSubmit = document.getElementById("config-submit");
 
-configFocusTime.addEventListener("change", checkValue);
-configShortBreak.addEventListener("change", checkValue);
-configLongBreak.addEventListener("change", checkValue);
+configFocusTime.addEventListener("input", checkValue);
+configShortBreak.addEventListener("input", checkValue);
+configLongBreak.addEventListener("input", checkValue);
 configSubmit.addEventListener("click", onSubmit);
 
 setSubmit(false, "Fill all Fields");
@@ -53,12 +53,14 @@ function checkValue() {
 }
 
 async function onSubmit() {
-  await saveTimeConfig("focus", parseInt(configFocusTime.value));
-  await saveTimeConfig("sbreak", parseInt(configShortBreak.value));
-  await saveTimeConfig("lbreak", parseInt(configLongBreak.value));
-  backgroundPage.interrupt();
-  await updateTimerConfig();
-  initializePomo();
-  const tabs = document.querySelectorAll("[data-main-tab-target]");
-  tabs[0].click();
+  if (configSubmit.disabled == false) {
+    await saveTimeConfig("focus", parseInt(configFocusTime.value));
+    await saveTimeConfig("sbreak", parseInt(configShortBreak.value));
+    await saveTimeConfig("lbreak", parseInt(configLongBreak.value));
+    backgroundPage.interrupt();
+    await updateTimerConfig();
+    initializePomo();
+    const tabs = document.querySelectorAll("[data-main-tab-target]");
+    tabs[0].click();
+  }
 }
