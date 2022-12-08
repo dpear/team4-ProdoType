@@ -1,8 +1,10 @@
 // import { timer } from "../src/data/db.js";
 import { renderPomo, updateTimerConfig, initializePomo } from "./focus.js";
-import { saveTimeConfig, getTimeConfig } from "./chromeStorageAdapter.js";
+import { ChromeStorageAdapter } from "./chromeStorageAdapter.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
+
+var dbAdapter = new ChromeStorageAdapter();
 
 const configFocusTime = document.getElementById("config-focus");
 const configShortBreak = document.getElementById("config-short-break");
@@ -54,9 +56,9 @@ function checkValue() {
 
 async function onSubmit() {
   if (configSubmit.disabled == false) {
-    await saveTimeConfig("focus", parseInt(configFocusTime.value));
-    await saveTimeConfig("sbreak", parseInt(configShortBreak.value));
-    await saveTimeConfig("lbreak", parseInt(configLongBreak.value));
+    await dbAdapter.saveTimeConfig("focus", parseInt(configFocusTime.value));
+    await dbAdapter.saveTimeConfig("sbreak", parseInt(configShortBreak.value));
+    await dbAdapter.saveTimeConfig("lbreak", parseInt(configLongBreak.value));
     backgroundPage.interrupt();
     await updateTimerConfig();
     initializePomo();

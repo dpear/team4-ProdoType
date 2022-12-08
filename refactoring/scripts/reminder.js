@@ -5,10 +5,13 @@
 
 // Imports
 import { Pomodoro } from "./pomodoroDao.js";
-import { savePomodoro } from "./chromeStorageAdapter.js"
+import { ChromeStorageAdapter } from "./chromeStorageAdapter.js"
 import { getAllCompletedTasks, getAllUpcomingTasks, renderList } from "./timeline.js"
 
 var backgroundPage = chrome.extension.getBackgroundPage();
+
+//DB Adapter
+var dbAdapter = new ChromeStorageAdapter();
 
 // HTML Elements
 const formTitle = document.querySelector("#form-title");
@@ -87,7 +90,7 @@ async function onSubmit() {
         const formData = new FormData(form);
         let pomodoro = new Pomodoro(formData.get('title').trim(), parseInt(formData.get('time')),
                                     formData.get('date'), [formData.get('tag')], "", false);
-        savePomodoro(pomodoro);
+        dbAdapter.savePomodoro(pomodoro);
         let _ = await getAllUpcomingTasks()
         renderList(backgroundPage.getTaskListTab())
 

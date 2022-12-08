@@ -24,13 +24,13 @@ let timer = [
 ]
 
 import { calculateTotalSeconds, elementTime } from "./utility.js";
-import { updatePomodoro, getTimeConfig } from "./chromeStorageAdapter.js";
+import { ChromeStorageAdapter } from "./chromeStorageAdapter.js";
 import { getAllCompletedTasks, getAllUpcomingTasks, renderList } from "./timeline.js";
 
 async function updateTimerConfig() {
-  let focusTime = await getTimeConfig("focus")
-  let shortBreakTime = await getTimeConfig("sbreak")
-  let longBreakTime = await getTimeConfig("lbreak")
+  let focusTime = await dbAdapter.getTimeConfig("focus")
+  let shortBreakTime = await dbAdapter.getTimeConfig("sbreak")
+  let longBreakTime = await dbAdapter.getTimeConfig("lbreak")
   if (focusTime != null || shortBreakTime != null || longBreakTime !=null) {
     timer[0].minutes = focusTime.focus;
     timer[1].minutes = shortBreakTime.sbreak;
@@ -42,6 +42,8 @@ await updateTimerConfig()
 
 var backgroundPage = chrome.extension.getBackgroundPage();
 console.log("background page is ", backgroundPage);
+
+var dbAdapter = new ChromeStorageAdapter();
 
 const ACTIVE = "active";
 
@@ -244,7 +246,7 @@ const completedBtnListenerCreate = () => {
       let pomo = backgroundPage.getTaskInfo()
       pomo.time_taken = curCompletedPomos < 1 ? 1 :curCompletedPomos
       pomo.is_completed = true
-      updatePomodoro(curTaskId, pomo)
+      dbAdapter.updatePomodoro(curTaskId, pomo)
       let _0 = await getAllCompletedTasks()
       let _1 = await getAllUpcomingTasks()
       renderList(backgroundPage.getTaskListTab())

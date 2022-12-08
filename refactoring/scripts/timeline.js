@@ -1,15 +1,11 @@
 import { initializePomo, renderTitle } from "./focus.js";
 import { Pomodoro } from "./pomodoroDao.js";
-import {
-  getAllCompletedPomodoros,
-  getAllPomodoros,
-  getAllUpcomingPomodoros,
-  savePomodoro,
-  deletePomodoro,
-  getPomodoroByTaskID
-} from "./chromeStorageAdapter.js";
+import {ChromeStorageAdapter} from "./chromeStorageAdapter.js";
 
 var backgroundPage = chrome.extension.getBackgroundPage();
+
+//DB Adapter
+var dbAdapter = new ChromeStorageAdapter();
 
 let upcomingState = [];
 let completedState = [];
@@ -20,7 +16,7 @@ async function getAllUpcomingTasks() {
 }
 
 async function getAllCompletedTasks() {
-  let receivedRes = await getAllCompletedPomodoros();
+  let receivedRes = await dbAdapter.getAllCompletedPomodoros();
   completedState = Object.entries(receivedRes);
 }
 
@@ -122,7 +118,7 @@ const listenStartBtnClicked = () => {
       const tabs = document.querySelectorAll("[data-main-tab-target]");
       //different task
       if (taskId != backgroundPage.getTaskId()) {
-        let getTaskInfo = await getPomodoroByTaskID(taskId)
+        let getTaskInfo = await dbAdapter.getPomodoroByTaskID(taskId)
         let data = Object.entries(getTaskInfo);
         let taskInfo = data[0][1]
         let taskTitle = taskInfo.title;
@@ -158,7 +154,7 @@ const listenDeleteBtnClicked = () => {
         backgroundPage.setPomoCompleted(0);
         initializePomo();
       }
-      deletePomodoro(taskId);
+      dbAdapter.deletePomodoro(taskId);
       let _0 = await getAllCompletedTasks();
       let _1 = await getAllUpcomingTasks();
       renderList(backgroundPage.getTaskListTab());
