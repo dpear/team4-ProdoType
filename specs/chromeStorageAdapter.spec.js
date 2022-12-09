@@ -1,21 +1,9 @@
-import { ChromeStorageAdapter } from "../refactoring/scripts/chromeStorageAdapter.js"
+import { ChromeStorageAdapter } from "../extension/scripts/chromeStorageAdapter.js"
 
 import * as chai from "chai";
 import * as sinon from "sinon";
 
 var expect = chai.expect;
-
-
-// describe ("test Suit", function(){
-//     it("test get all pomodoros method", function(){
-//         // var mock_chrome_storage = sinon.mock(chrome.storage.local);
-//         // var expectation = mock.expects("get");
-//         // expectation.withArgs(null);
-//         savePomodoro();
-//         mock.verify();
-//         // expect(savePomodoro()).to.be.equal(3);
-//     });
-// });
 
 var chrome = {
   storage: {
