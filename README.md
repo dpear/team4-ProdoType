@@ -5,15 +5,40 @@ Daniela Perry, Qiwen Zhao, Satvik Gupta, Dev Gulati, Shicheng Bei, Teja Dhondu, 
 Project repo for ProdoType, a social pomodoro timer app.
 We present ProdoType, an app for tracking and sharing your productivity throughout the day.
 
-## ProdoType
+# Guide to a new developer
 
-All materials for the app can be found here
+## Problem Statement
 
-## Elevator demo
+It’s really hard to sometime get started with the task at hand. There can be multiple reasons for it.
 
-Code examples from our class presentation, Tuesday Oct 25.
-Three different versions of an elevator with basic functionalities, each with increasingly proper incorporation of the Separation of Concerns princiles from David Farley's textbook.
+1. Cold start.
+2. Distractions.
+3. Procastination etc.
 
-## Codepen demos
+## Proposed Solution
 
-Three demos incorporating API's and demonstrating caveats of the javascript language
+We are creating a chrome extension contaning a pomodoro timer enhanced with a to-do list creation functionality.
+
+The **Pomodoro Technique** helps you resist all of those self-interruptions and re-train your brains to focus. Each pomodoro is dedicated to one task and each break is a chance to reset and bring your attention back to what you should be working on.
+
+The Pomodoro Technique focuses on breaking down large tasks into smaller, more manageable ones. Ultimately, it allows you to focus better and spread out your productivity levels throughout the day.
+
+## App Architecture and Docs
+
+Please refer to [App architecture](https://www.notion.so/App-Architecture-e51fd2f52e71422b9f666ee9c75e187a) page for all the discssions around this.
+
+## Clone the code
+
+Our code for this chrome extension resides at, [git repo](https://github.com/dpear/team4-ProdoType). Please follow the [following](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository?tool=webui) steps to clone the repo. Replace link to git repo whereever required.
+
+## Run the extension locally
+
+Follow the steps on our [Chrome Extension](https://www.notion.so/Chrome-Extensions-87a79dc5d2324f51a1c316c88fcbdea8) notion page to run the extension locally.
+
+## App Testing
+
+Follow the
+
+1. [Link](https://www.notion.so/Puppeteer-UI-Testing-efab366705fe44df915df7dec40442b7) to run UI tests locally.
+2. Link to run unit tests locally.
+3. Link to scenario testing.
