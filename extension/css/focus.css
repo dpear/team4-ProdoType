@@ -1,21 +1,10 @@
 @import '../src/fonts/fonts.css';
 
-/* #main-focus {
-    width: 80%;
-    min-width: 400px;
-    max-width: 1000px;
-    height: 80%;
-    min-height: var(--internal-content-min-height);
-    color: #fff;
-} */
-
-
 #focus #focus-header {
     display: flex;
     width: 100%;
     height: 10%;
     justify-content: space-evenly;
-    /* gap: 2px; */
     font-size: var(--internal-title-font-size);
 }
 
@@ -23,19 +12,15 @@
 #focus #focus-header .focus-nav {
     flex: 1;
     position: relative;
-    /* background: var(--background-black); */
     background: var(--primary-color-deep);
     text-align: center;
     padding: 10px 0;
     cursor: pointer;
-    /* border: var(--border-width) solid var(--background-black); */
-    /* border-radius: 3px; */
     transition: 0.2s;
 }
 
 
 #focus #focus-header .focus-nav:hover {
-    /* border: var(--border-width) dashed var(--primary-color); */
     background: var(--text-color);
     color: var(--primary-color);
 }
@@ -45,26 +30,11 @@
     background: var(--background-black);
 }
 
-
-/* #focus #focus-header .focus-nav:first-child {
-    border-top-left-radius: var(--box-radius);
-}
-
-#focus #focus-header .focus-nav:last-child {
-    border-top-right-radius: var(--box-radius);
-} */
-
-
 .content {
     position: relative;
-    /* margin-top: 2px; */
     width: 100%;
     height: 90%;
-    /* min-height: var(--content-min-height); */
     background: var(--primary-color);
-    /* border: var(--border-width) dashed var(--background-black); */
-    /* border-bottom-right-radius: var(--box-radius);
-    border-bottom-left-radius: var(--box-radius); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +57,6 @@
 
 
 #focus #focus-header .active {
-    /* border: var(--border-width) dashed var(--background-black); */
     background-color: var(--primary-color);
     color: var(--text-color);
 }
@@ -98,19 +67,9 @@
     align-items: center;
     width: 100%;
     height: 10%;
-    /* background-color: var(--primary-color-deep); */
     margin-top: var(--start-margin-top);
     margin-bottom: var(--start-margin-top);
-    /* border-radius: var(--box-radius); */
 }
-
-/* #focus-time .annotation #task-completed{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 10%;
-    height: 100%;
-} */
 
 #focus-time .annotation .focusing-task-tile {
     display: flex;
@@ -235,13 +194,6 @@
     border-radius: 50%;
 }
 
-/* #action-buttons {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-} */
-
-
 .start {
     display: flex;
     position: relative;
@@ -250,19 +202,9 @@
     width: 20%;
     height: 15%;
     margin: var(--start-margin-top);
-    /* background: var(--text-color);
-    color: var(--primary-color-deep);
-    font-size: var(--internal-title-font-size);
-    margin: var(--start-margin-top);
-    padding: var(--start-padding-top-bottom) var(--start-padding-left-right);
-    border-radius: calc(var(--box-radius) / 2);
-    overflow: hidden;
-    cursor: pointer; */
 }
 
 .start .timer-button {
-    /* width: 100%;
-    height: 100%; */
     height: 60px;
     width: 60px;
     border-radius: 120px;
@@ -288,16 +230,6 @@
     display: none;
 }
 
-/* .start::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: var(--start-before-height);
-    bottom: 0px;
-    background: rgba(0, 0, 0, 0.1);
-} */
-
 .reset {
     display: flex;
     position: relative;
@@ -322,16 +254,3 @@
     bottom: 0px;
     background: rgba(0, 0, 0, 0.1);
 }
-
-/*
-@media (max-width: 800px) {
-    :root {
-        --border-width: 3px;
-        --box-radius: 10px;
-        --title-font-size: 1.2rem;
-        --content-min-height: 250px;
-        --time-font-size: calc(3rem + 3vw);
-        --start-margin-top: 10px;
-        --start-before-height: 5px;
-    }
-} */
