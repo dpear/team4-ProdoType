@@ -19,4 +19,4 @@ jobs:
       - run: chmod 0777 ./node_modules/.bin/mocha # make mochajs executable 
       
       - name: Unit Tests for DB Layer
-        run: npm test-db
+        run: npm test
