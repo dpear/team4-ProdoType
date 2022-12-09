@@ -43,4 +43,4 @@ Follow the
 
 1. [Link](https://www.notion.so/Puppeteer-UI-Testing-efab366705fe44df915df7dec40442b7) to run UI tests locally.
 2. [Link](https://www.notion.so/Mocha-Unit-Testing-86de8cc39d4c4eeb84547cc8d6d8e570) to run unit tests locally.
-3. Link to scenario testing.
+3. [Link](https://www.notion.so/Scenario-Testing-1376aa44cdea4bceae030c65e0490afb) to scenario testing.
