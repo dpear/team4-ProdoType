@@ -1,0 +1,30 @@
+name: CI
+on: push
+
+jobs:
+  installDependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+      
+      - uses: actions/checkout@v3
+      
+      - name: Install Dependencies
+        uses: actions/setup-node@v2
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+        with:
+          args: install
+      
+      - name: Install dependencies
+        run: npm install
+
+      - run: chmod 0777 ./node_modules/.bin/mocha # make mochajs executable 
+      
+      - name: Test Code
+        uses: mujo-code/puppeteer-headful@16.6.0 # run chrome in headful mode to execute tests
+        env:
+          CI: "true"
+        with:
+          args: npm test
