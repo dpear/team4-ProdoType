@@ -236,10 +236,6 @@ const renderPomo = () => {
 
 const completedBtnListenerCreate = () => {
   const pomoCompletedBtn = document.getElementById("task-completed");
-  // pomoCompletedBtn.addEventListener("click", () => {
-  //   localStorage.setItem(ACTIVEIDX, -1);
-  //   initializePomo();
-  // });
   pomoCompletedBtn.addEventListener("click", async() => {
     const curTaskId = backgroundPage.getTaskId()
     if (curTaskId != null) {
@@ -278,13 +274,8 @@ focusTabs.forEach((tab, index) => {
     const target = document.querySelector(tab.dataset.tabTarget);
     target.classList.toggle(ACTIVE);
 
-
-    //manually initialize
-    // clearInterval(handle);
-    // backgroundPage.interrupt()
     initializePomoBtn();
     backgroundPage.setGlobalTime(calculateTotalSeconds(timer[index]));
-    // globalTime = calculateTotalSeconds(timer[index]);
     elementTime(timeShow[index], calculateTotalSeconds(timer[index]));
   });
 });
@@ -357,8 +348,6 @@ function showFinish(index) {
   finishBtns[index].style.display = "block";
 }
 
-// renderTitle();
-// initializePomo();
 renderPomo();
 completedBtnListenerCreate();
 chrome.runtime.sendMessage({
