@@ -25,7 +25,7 @@ export class ChromeStorageAdapter {
     }
 
     async getTimeConfig(key) {
-        let res = await getPomodoroByIDPromise(key)
+        let res = await this.getPomodoroByIDPromise(key)
         return res
     }
 

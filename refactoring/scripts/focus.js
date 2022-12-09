@@ -27,11 +27,13 @@ import { calculateTotalSeconds, elementTime } from "./utility.js";
 import { ChromeStorageAdapter } from "./chromeStorageAdapter.js";
 import { getAllCompletedTasks, getAllUpcomingTasks, renderList } from "./timeline.js";
 
+var dbAdapter = new ChromeStorageAdapter();
+
 async function updateTimerConfig() {
   let focusTime = await dbAdapter.getTimeConfig("focus")
   let shortBreakTime = await dbAdapter.getTimeConfig("sbreak")
   let longBreakTime = await dbAdapter.getTimeConfig("lbreak")
-  if (focusTime != undefined || shortBreakTime != undefined || longBreakTime !=undefined) {
+  if (focusTime.focus != undefined || shortBreakTime.sbreak != undefined  || longBreakTime.lbreak != undefined ) {
     timer[0].minutes = focusTime.focus;
     timer[1].minutes = shortBreakTime.sbreak;
     timer[2].minutes = longBreakTime.lbreak;
