@@ -1,4 +1,3 @@
-// import { timer } from "../src/data/db.js";
 let timer = [
   {
     id: "focus_time",
