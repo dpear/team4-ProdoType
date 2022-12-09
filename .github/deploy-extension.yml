@@ -1,0 +1,21 @@
+name: Deploy 
+on:
+  push
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: Checkout repo 
+        uses: actions/checkout@v2 # Requried will all actions
+        # run: echo ${{ github.repository }}
+        with: 
+          ref: feature-timeline-sync-dev
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create zip folder 
+        run: npm run deploy
