@@ -35,7 +35,7 @@ Our code for this chrome extension resides at, [git repo](https://github.com/dpe
 
 ## Run the extension locally
 
-Follow the steps on our [Chrome Extension](https://www.notion.so/Chrome-Extensions-87a79dc5d2324f51a1c316c88fcbdea8) notion page to run the extension locally.
+Follow the steps on our [Chrome Extension](https://www.notion.so/Chrome-Extensions-87a79dc5d2324f51a1c316c88fcbdea8) notion page to run the extension locally. ALso you can download the extension zip [here](https://github.com/dpear/team4-ProdoType/blob/main/extension.zip)
 
 ## App Testing
 
