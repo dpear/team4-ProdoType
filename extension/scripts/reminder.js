@@ -31,9 +31,12 @@ formSubmit.addEventListener("click", onSubmit);
 createTaskButton.addEventListener("click", () => form.reset())
 
 // Disable Keyboard Input to Date Element
+formDate.testing = false;
 formDate.addEventListener("keydown", event => {
-    event.preventDefault();
-    return false
+    if (!formDate.testing) {
+        event.preventDefault();
+        return false
+    }
 });
 
 // Reset Form on Startup
@@ -72,7 +75,7 @@ function formState() {
     }
     // Validate Title length
     else if (formTitle.value.length > 25) {
-        setSubmit(false, "Enter title less than 25 characters");
+        setSubmit(false, "Enter Title less than 25 Characters");
     }
     else {
         setSubmit(true, "Add Task");

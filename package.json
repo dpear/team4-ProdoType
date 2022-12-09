@@ -9,6 +9,7 @@
     "scripts": {
         "deploy": "node deploy.js",
         "test": "mocha --timeout 10000 './specs/**/*.spec.js'",
+        "uiTest": "mocha ./specs/uiTest.js",
         "publish": "CLIENT_ID=${CLIENT_ID} CLIENT_SECRET=${CLIENT_SECRET} EXTENSION_ID=${EXTENSION_ID} REFRESH_TOKEN=${REFRESH_TOKEN} node ./deploy.js"
     },
     "dependencies": {
