@@ -7,6 +7,8 @@ We present ProdoType, an app for tracking and sharing your productivity througho
 
 # Guide to a new developer
 
+Access the notion here, only for TA and PROF [Link](https://psychedelic-stretch-629.notion.site/2385b1e0325d468691785eb1b9d67553?v=afb23ac162ab4d0c9de01275b04d0ad8)
+
 ## Problem Statement
 
 It’s really hard to sometime get started with the task at hand. There can be multiple reasons for it.
