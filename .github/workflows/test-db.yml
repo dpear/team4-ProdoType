@@ -1,0 +1,22 @@
+name: CI Unit Tests 
+on: push
+
+jobs:
+  installDependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+      
+      - uses: actions/checkout@v3
+      
+      - name: Install Dependencies
+        uses: actions/setup-node@v2
+      
+      - name: Install dependencies
+        run: npm install
+
+      - run: chmod 0777 ./node_modules/.bin/mocha # make mochajs executable 
+      
+      - name: Unit Tests for DB Layer
+        run: npm test

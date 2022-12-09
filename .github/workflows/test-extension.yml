@@ -1,4 +1,4 @@
-name: CI
+name: CI Unit Tests for UI
 on: push
 
 jobs:
