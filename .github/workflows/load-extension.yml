@@ -1,0 +1,23 @@
+name: Load Chrome Extension
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: feature-timeline-sync-dev
+
+      - name: Chrome Extension upload & publish
+        uses: Passiverecords/chrome-extension-upload-action@1.4.1
+        with:
+          refresh-token: '1//06KHVH0R-6QzYCgYIARAAGAYSNwF-L9IrkaBLXFJsrHoCuGT2r6iuQj4GXwK4aDbcKWAKuZKE3_90_AKHNDYkb1SLaqhtqqY6sSE'
+          client-id: '565371363750-33op6igpch0ok31ce1bsn8svukkv0dm7.apps.googleusercontent.com'
+          client-secret: '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'
+          file-name: './extension.zip'
+          app-id: 'chrome-webstore-upload-370917'
+          publish: true

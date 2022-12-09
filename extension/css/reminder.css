@@ -1,0 +1,194 @@
+/* CSS Pertaining to Create Task Page */
+
+@import '../src/fonts/fonts.css';
+
+#create-task-dialogue {
+    width: 100%;
+    height: 100%;
+}
+
+#create-task-dialogue form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+#create-task-dialogue #reminder-header {
+    display: flex;
+    flex: 1;
+    color: var(--text-color);
+    font-size: var(--reminder-font-size);
+    margin-top: var(--start-margin-top);
+}
+
+/* Generic Dark Red Rounded Box */
+#create-task-dialogue .bubble-box {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    border-radius: var(--box-radius);
+    font-size: var(--reminder-font-size);
+    color: var(--text-color);
+    margin-bottom: var(--start-margin-top);
+    background-color: var(--primary-color-deep);
+}
+
+/* Title Field Input */
+#create-task-dialogue #form-title {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    background-color: var(--primary-color-deep);
+    border: none;
+    color: var(--text-color);
+    border-radius: var(--box-radius);
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+/* Title Field Placeholder Text */
+#create-task-dialogue #form-title::placeholder {
+    color: var(--text-color);
+}
+
+/* Div Containing 2 Bubble Boxes Horizontally */
+#create-task-dialogue #number-date-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    width: 85%;
+}
+
+#create-task-dialogue #number-date-div .bubble-box {
+    height: 100%;
+}
+
+/* Create Margin between the 2 Bubble Boxes */
+#create-task-dialogue #number-date-div .bubble-box:first-child {
+    margin-right: 1%;
+}
+
+/* Time Ion Icon */
+#create-task-dialogue #reminder-pomo-icon {
+    width: 30%;
+    font-size: 20px;
+    color: var(--text-color);
+    pointer-events: none;
+}
+
+/* Time Field Input */
+#create-task-dialogue #form-time {
+    width: 40%;
+    background: var(--primary-color);
+    border: none;
+    color: var(--text-color);
+    text-align: center;
+    border: solid 1px var(--text-color);
+    border-radius: var(--box-radius);
+    -moz-appearance: textfield; /* Firefox No Arrows */
+}
+
+/* Chrome and Edge No Arrows */
+#create-task-dialogue #form-time::-webkit-outer-spin-button,
+#create-task-dialogue #form-time::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Time Field Placholder Text */
+#create-task-dialogue #form-time::placeholder {
+    color: var(--text-color);
+}
+
+/* Date Field Input */
+#create-task-dialogue #form-date {
+    background-color: var(--primary-color-deep);
+    border: none;
+    color: var(--text-color);
+    text-align: center;
+    border-radius: var(--box-radius);
+    height: 100%;
+    width: 100%;
+    /* Enable Date Picker Only */
+    display: inline-block;
+    position: relative;
+}
+
+/* Enable Date Picker Only */
+#create-task-dialogue #form-date::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* No Placeholder on Click */
+#create-task-dialogue #form-title:focus::placeholder,
+#create-task-dialogue #form-time:focus::placeholder {
+    color: transparent;
+}
+
+/* Tag Field Input */
+#create-task-dialogue #form-tag {
+    display: flex;
+    flex: 1;
+    border: none;
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
+    text-align: center;
+    border-radius: var(--box-radius);
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Submit Button */
+#create-task-dialogue #form-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 30px;
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
+    border: none;
+}
+
+/* Suppress Mouse-Over Text on Submit Ion Icon */
+#create-task-dialogue #form-submit ion-icon {
+    pointer-events: none;
+}
+
+/* Disabled Submit Button */
+#create-task-dialogue #form-submit:disabled {
+    opacity: 0.6;
+    cursor: auto;
+}
+
+/* Don't change Submit Button on Hover when Disabled */
+#create-task-dialogue #form-submit:disabled:hover {
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
+}
+
+/* Submit Button on Hover */
+#create-task-dialogue #form-submit:hover {
+    color: var(--primary-color-deep);
+    background-color: var(--text-color);
+}

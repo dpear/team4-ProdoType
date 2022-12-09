@@ -1,0 +1,114 @@
+.config {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.config #setting-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    font-size: var(--reminder-font-size);
+    margin-top: var(--start-margin-top);
+}
+
+.config #config-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background: var(--primary-color-deep); */
+    width: 80%;
+    height: 60%;
+    font-size: var(--setting-font-size);
+}
+
+.config #config-form .config-type{
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    font-size: var(--setting-font-size);
+    background-color: var(--primary-color-deep);
+    padding: 10px;
+    border-radius: var(--box-radius);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* .config #config-form .config-type .config-type-name{
+    width: 40%;
+} */
+
+/* Time Field Input */
+.config #config-form .config-type .config-time {
+    width: 22%;
+    background: var(--primary-color);
+    border: none;
+    color: var(--text-color);
+    text-align: center;
+    border: solid 1px var(--text-color);
+    border-radius: var(--box-radius);
+    -moz-appearance: textfield; /* Firefox No Arrows */
+}
+
+/* Chrome and Edge No Arrows */
+.config #config-form .config-type .config-time::-webkit-outer-spin-button,
+.config #config-form .config-type .config-time::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.config #config-form .config-type .config-time::placeholder {
+    color: rosybrown;
+}
+
+/* .config #config-form .config-type .config-time-unit{
+    width: 20%;
+} */
+
+/* Submit Button */
+.config #config-form #config-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 40px;
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
+    border: none;
+}
+
+/* Suppress Mouse-Over Text on Submit Ion Icon */
+.config #config-form #config-submit ion-icon {
+    pointer-events: none;
+}
+
+/* Disabled Submit Button */
+.config #config-form #config-submit:disabled {
+    opacity: 0.6;
+    cursor: auto;
+}
+
+/* Don't change Submit Button on Hover when Disabled */
+.config #config-form #config-submit:disabled:hover {
+    background-color: var(--primary-color-deep);
+    color: var(--text-color);
+}
+
+/* Submit Button on Hover */
+.config #config-form #config-submit:hover {
+    color: var(--primary-color-deep);
+    background-color: var(--text-color);
+}
