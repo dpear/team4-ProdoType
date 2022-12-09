@@ -40,5 +40,5 @@ Follow the steps on our [Chrome Extension](https://www.notion.so/Chrome-Extensio
 Follow the
 
 1. [Link](https://www.notion.so/Puppeteer-UI-Testing-efab366705fe44df915df7dec40442b7) to run UI tests locally.
-2. Link to run unit tests locally.
+2. [Link](https://www.notion.so/Mocha-Unit-Testing-86de8cc39d4c4eeb84547cc8d6d8e570) to run unit tests locally.
 3. Link to scenario testing.
